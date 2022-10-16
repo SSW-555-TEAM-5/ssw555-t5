@@ -6,4 +6,5 @@
     - NJ: not really sure how to implement a navigation bar, which could be useful in the future but as of now there is a way to
           reach every page from any point without the use of navigation bar
     - For the sake of the upcoming demo, we can hard code example chores and rewards and use them as an outline for future components
+
 *** there is no typical 'index.js' folder. if you need to access that you can navigate to nodemodules/expo/AppEntry.js, they are essentially the same thing***
