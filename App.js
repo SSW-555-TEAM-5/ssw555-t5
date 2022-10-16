@@ -1,12 +1,48 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+
+import { StyleSheet} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import HomeScreen from './HomeScreen';
+import CreateChores from './CreateChores';
+import ViewChore from './ViewChore';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        
+      <Stack.Screen name="Home" component={HomeScreen} options={{
+          headerStyle: { backgroundColor: 'white' },
+          headerTintColor: '#133C55',
+          headerShadowVisible: false,
+          headerShown: true,
+          title: '',
+        }} />
+
+      
+        <Stack.Screen name="CreateChores" component={CreateChores} options={{
+          headerStyle: { backgroundColor: 'white' },
+          headerTintColor: '#133C55',
+          headerShadowVisible: false,
+          headerBackVisible: true,
+          title: ''
+        }} />
+
+        <Stack.Screen name="ViewChore" component={ViewChore} options={{
+          headerStyle: { backgroundColor: 'transparent' },
+          headerTransparent: true,
+          headerTintColor: 'white',
+          headerShadowVisible: false,
+          headerBackVisible: true,
+          title: '',
+
+        }} />
+
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
