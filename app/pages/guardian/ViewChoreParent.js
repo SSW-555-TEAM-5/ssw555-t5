@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react';
 import {  doc,  getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import moment from 'moment';
 import { Overlay } from 'react-native-elements';
+import styles from '../../components/colors';
 
 
-export default function ViewChore({ navigation,route }) {
+export default function ViewChoreParent({ navigation,route }) {
   const {choreId, firestore} = route.params;
   
   
@@ -90,77 +91,3 @@ export default function ViewChore({ navigation,route }) {
     </View>
   );
 }
-const styles = StyleSheet.create({
-  contentContainer: {
-    alignItems:'center',
-    padding:25
-  },
-  hostedByText:{
-    color: 'black',
-    fontSize: 25,
-  },
-  whiteTextBold: {
-    color: 'black',
-    fontSize: 40,
-    fontWeight: 'bold'
-  },
-  whiteTextReg: {
-    color: 'black',
-    fontSize: 20,
-    
-  },
-  gray_whiteTextBold: {
-    color: 'grey',
-    fontSize: 18,
-    fontWeight: 'bold',
-    fontStyle: "italic",
-    padding: 20,
-
-  },
-  grayTextReg: {
-    color: 'gray',
-    fontSize: 18,
-    fontStyle: "italic",
-  },
-  blackTextBold: {
-    color: 'black',
-    fontSize: 27,
-    fontWeight: 'bold'
-  },
-  white_smallTextReg: {
-    color: 'black',
-    fontSize: 15,
-    
-  },
-  black_smallTextBold: {
-    color: 'black',
-    fontSize: 20,
-    fontWeight: 'bold'
-  },
-  menu:{
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    flexDirection: "column", 
-    backgroundColor: "white",
-    borderWidth: 2,
-    width:"80%",
-    borderRadius:15
-  },
-  menuTitle:{
-    color: 'black',
-    fontSize: 27,
-    fontWeight: 'bold',
-    textDecorationLine:'underline'
-  },
-  locationBox:{
-    flexDirection: "row", 
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    backgroundColor: "white",
-    borderWidth: 2,
-    width:"80%",
-    borderRadius:15
-  }
-
-  
-});

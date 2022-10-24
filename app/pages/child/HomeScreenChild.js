@@ -3,7 +3,8 @@ import React, {useEffect, useState} from 'react';
 import { initializeApp} from 'firebase/app';
 import { getFirestore, collection, query, where, getDocs} from 'firebase/firestore';
 import moment from 'moment';
-import Constants from "expo-constants";
+import styles from '../../components/colors';
+
 import {FlatList, SafeAreaView, View, ScrollView, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 
@@ -21,7 +22,7 @@ const firestore = getFirestore(app);
 
 
 
-export default function Homescreen () {
+export default function HomeScreenChild () {
     
     //Data format = {id: element,id2:element2}
     const [DATA,setDATA] = useState([]);
@@ -90,50 +91,3 @@ export default function Homescreen () {
 
 
 }
-const styles = StyleSheet.create({
-    searchBar: {
-        padding: 8,
-        borderWidth:.5,
-        borderRadius:8,
-        width:"80%",
-        flexDirection:'row'
-
-
-    },
-    searchBarButton:{
-        width:'10%',
-        
-
-    },
-    searchBarButtonText:{
-        fontSize: 30,
-        textAlign:'right'
-    },
-    homePage:{
-        height:'100%'
-        
-
-    },
-    imageStyle:{
-        height: '100%',
-        width: '100%',
-        borderTopLeftRadius: 8,
-        borderBottomLeftRadius: 8
-
-    },
-    infoTextTitle:{
-        fontSize:14,
-        textAlign: 'left',
-        fontWeight: 'bold',
-    },
-    infoText: {
-        color: 'gray',
-        textAlign: 'left',
-        fontSize: 12,
-    },
-    linkText:{
-        textAlign:'left',
-        fontSize:12
-
-    }
-});
