@@ -82,7 +82,7 @@ export default function ViewChoreChild({ navigation,route }) {
           </View>
         
           <Button
-                onPress={async () => {  navigation.navigate("Home")}}
+                onPress={async () => {  navigation.navigate("ChildHome")}}
                 title="Ok"
                 color="#841584"
             />

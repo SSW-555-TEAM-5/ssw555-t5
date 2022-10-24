@@ -28,6 +28,15 @@ export default function App() {
           headerShown: true,
           title: '',
         }} />
+        <Stack.Screen name="ViewChoreChild" component={ViewChoreChild} options={{
+          headerStyle: { backgroundColor: 'transparent' },
+          headerTransparent: true,
+          headerTintColor: 'white',
+          headerShadowVisible: false,
+          headerBackVisible: true,
+          title: '',
+
+        }} />
         <Stack.Screen name="ParentHome" component={HomeScreenParent} options={{
           headerStyle: { backgroundColor: 'white' },
           headerTintColor: '#133C55',
@@ -51,15 +60,7 @@ export default function App() {
           headerBackVisible: true,
           title: ''
         }} />
-        <Stack.Screen name="ViewChoreChild" component={ViewChoreChild} options={{
-          headerStyle: { backgroundColor: 'transparent' },
-          headerTransparent: true,
-          headerTintColor: 'white',
-          headerShadowVisible: false,
-          headerBackVisible: true,
-          title: '',
-
-        }} />
+        
         <Stack.Screen name="ViewChoreParent" component={ViewChoreParent} options={{
           headerStyle: { backgroundColor: 'transparent' },
           headerTransparent: true,

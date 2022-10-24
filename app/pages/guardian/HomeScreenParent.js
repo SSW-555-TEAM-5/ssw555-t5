@@ -71,7 +71,7 @@ export default function HomeScreenParent () {
                 renderItem={({item}) =>(
                     <ScrollView style={{ width: '100%', padding: 10}}>
                     
-                        <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap', width: "80%", height:'95%', borderWidth: .5, borderRadius: 8 }}onPress={() => navigation.navigate("ViewChore", { choreId: item.id, firestore })}>
+                        <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap', width: "80%", height:'95%', borderWidth: .5, borderRadius: 8 }}onPress={() => navigation.navigate("ViewChoreParent", { choreId: item.id, firestore })}>
                             <View style={{ flexDirection: 'column', padding: 10 }}>
                                 {/* chore card */}
                                 <Text style={styles.infoTextTitle}>{item.name}</Text>
