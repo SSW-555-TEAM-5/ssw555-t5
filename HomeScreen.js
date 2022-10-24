@@ -4,6 +4,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, query, where, getDocs} from 'firebase/firestore';
 import moment from 'moment';
 import Constants from "expo-constants";
+import navBar from './app/components/header';
 const firebaseConfig = {
     apiKey: Constants.manifest?.extra?.firebaseApiKey,
     authDomain: Constants.manifest?.extra?.firebaseAuthDomain,
@@ -84,37 +85,7 @@ export default function HomeScreen({navigation,route }) {
     }
     return (
         
-        <SafeAreaView style={styles.homePage}>
-            <View style={{flexDirection:'row', justifyContent:'space-evenly'}}>
-                <Button
-                    onPress={() => navigation.navigate("CreateChores", {firestore})}
-                    title="Create chore"
-                    color="#841584"
-                />
-            </View>
-            
-            
-            <View style={{padding:10}}>
-                
-                <Text>Search for a Chore...</Text>
-                
-                    <View style={{flexDirection:'row'}}>
-                        <TextInput 
-                        autoCapitalize={"none"}
-                        onChangeText={(value) => enterSearch(value)}
-                        value = {searchText}
-                        placeholder="Search"
-                        style={styles.searchBar}/>   
-                        <TouchableOpacity style={styles.searchBarButton} onPress={async () => {handleSearch()}}>
-                            <Text style={[styles.searchBarButtonText,{alignSelf:'flex-end'}]}>→</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.searchBarButton} onPress={async () => {handleRefresh()}}>
-                            <Text style={styles.searchBarButtonText}>⟳</Text>
-                        </TouchableOpacity>
-                    </View>
-                
-            </View>
-
+        <SafeAreaView>
             <FlatList
                 keyExtractor={(item)=> item.id}
                 data={DATA}
@@ -123,7 +94,7 @@ export default function HomeScreen({navigation,route }) {
                 renderItem={({item}) =>(
                     <ScrollView style={{ width: '100%', padding: 10}}>
                     
-                        <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap', width: "100%", height:'100%', borderWidth: 1, borderRadius: 8 }}onPress={() => navigation.navigate("ViewChore", { choreId: item.id, firestore })}>
+                        <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap', width: "80%", height:'95%', borderWidth: .5, borderRadius: 8 }}onPress={() => navigation.navigate("ViewChore", { choreId: item.id, firestore })}>
                             {/* <View style={{ flex: .5 }}>
                                 <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
                             </View> */}

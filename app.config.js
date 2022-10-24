@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import firebaseConfig from '.env';
 
 export default {
   "expo": {
