@@ -1,7 +1,7 @@
 
 import { StyleSheet} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import HomeScreen from './HomeScreen';
+import Homescreen from './app/pages/child/homescreen';
 import CreateChores from './CreateChores';
 import ViewChore from './ViewChore';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -14,7 +14,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         
-      <Stack.Screen name="Home" component={HomeScreen} options={{
+      <Stack.Screen name="Home" component={Homescreen} options={{
           headerStyle: { backgroundColor: 'white' },
           headerTintColor: '#133C55',
           headerShadowVisible: false,
