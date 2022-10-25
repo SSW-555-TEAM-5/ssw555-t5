@@ -1,7 +1,7 @@
 {
   "name": "ssw555-t5",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "index.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -9,16 +9,37 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "expo": "~46.0.16",
+    "9": "^0.0.1",
+    "@expo/webpack-config": "^0.17.0",
+    "@react-native-community/datetimepicker": "6.2.0",
+    "@react-navigation/native": "^6.0.13",
+    "@react-navigation/native-stack": "^6.9.1",
+    "dotenv": "^16.0.3",
+    "expo": "^46.0.16",
     "expo-status-bar": "~1.4.0",
+    "firebase": "^9.12.1",
+    "moment-timezone": "^0.5.38",
     "react": "18.0.0",
-    "react-native": "0.69.6",
-    "react-native-web": "~0.18.7",
     "react-dom": "18.0.0",
-    "@expo/webpack-config": "^0.17.0"
+    "react-native": "0.69.6",
+    "react-native-elements": "^3.4.2",
+    "react-native-web": "~0.18.7",
+    "v": "^0.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
   },
-  "private": true
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SSW-555-TEAM-5/ssw555-t5.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SSW-555-TEAM-5/ssw555-t5/issues"
+  },
+  "homepage": "https://github.com/SSW-555-TEAM-5/ssw555-t5#readme",
+  "description": ""
 }
