@@ -10,14 +10,19 @@
   },
   "dependencies": {
     "9": "^0.0.1",
+    "@expo-google-fonts/cinzel-decorative": "^0.2.2",
+    "@expo-google-fonts/montserrat": "^0.2.2",
     "@expo/webpack-config": "^0.17.0",
     "@react-native-community/datetimepicker": "6.2.0",
+    "@react-native-firebase/auth": "^16.2.0",
+    "@react-native-google-signin/google-signin": "^8.0.1",
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/native-stack": "^6.9.1",
     "dotenv": "^16.0.3",
     "expo": "^46.0.16",
+    "expo-image-picker": "~13.3.1",
     "expo-status-bar": "~1.4.0",
-    "firebase": "^9.12.1",
+    "firebase": "^9.6.11",
     "moment-timezone": "^0.5.38",
     "react": "18.0.0",
     "react-dom": "18.0.0",
@@ -27,7 +32,8 @@
     "v": "^0.3.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "react-error-overlay": "^6.0.9"
   },
   "private": true,
   "repository": {
