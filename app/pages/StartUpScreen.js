@@ -21,7 +21,7 @@ export default function StartUpScreen({ navigation }) {
                 <Text style={styles.text1}>ChoreNScore</Text>
             </View>
             <Button
-                onPress={() => navigation.navigate("LogIn")}
+                onPress={() => navigation.navigate("Login")}
                 title="   Login  "
                 color="green"
             />

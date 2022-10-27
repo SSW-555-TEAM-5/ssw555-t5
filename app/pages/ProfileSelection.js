@@ -23,15 +23,14 @@ const auth = getAuth(app);
 const firestore = getFirestore(app);
 
 export default function ProfileSelection({ navigation, route }) {
-    let email = "deanj@gmail.com";
-    let accId = "3vv3AoFj0XPiO8edCQq8";
-    //const { accId, email } = route.params;
+    const { accId} = route.params;
     const [pin, setPin] = useState("");
     const [visible, setVisible] = useState(false);
     //Data format = {id: element,id2:element2}
     const [DATA, setDATA] = useState([]);
     const [refeshing, setRefresh] = useState(false);
 
+    //switches overlay on and off
     const toggleOverlay = () => {
         if (visible == true) {
             setVisible(false);
@@ -41,6 +40,7 @@ export default function ProfileSelection({ navigation, route }) {
 
     };
 
+    //function that runs when screen is loading, it lists all profiles onto the data array
     async function start() {
         try {
             const q = collection(firestore, "seed", accId, "Profiles");
@@ -58,6 +58,7 @@ export default function ProfileSelection({ navigation, route }) {
 
     }
 
+    //checks if the profile selected is guardian profile or not
     async function guardStatus(name) {
         const q = await query(collection(firestore, "seed", accId, "Profiles"), where("profileName", "==", name));
 
@@ -65,6 +66,7 @@ export default function ProfileSelection({ navigation, route }) {
 
         querySnapshot.forEach((doc) => {
             let docData = doc.data();
+            //if guardian profile is not selected, child homescreen is shown with corresponding profile
             if (docData["status"] == false) {
                 navigation.navigate("HomeScreenChild", { accId, docid: doc.id, firestore })
             }
@@ -74,9 +76,11 @@ export default function ProfileSelection({ navigation, route }) {
         });
     }
 
+    //verify the pin entered
     async function guardianVerify() {
         const q = query(collection(firestore, "seed", accId, "Profiles"), where("pin", "==", pin));
         const querySnapshot = await getDocs(q);
+        //if the pin is correct, navigate to parent homescreen else return to profile pg
         if (!querySnapshot.empty) {
             let docR = "";
             querySnapshot.forEach((doc) => {
@@ -88,11 +92,13 @@ export default function ProfileSelection({ navigation, route }) {
         setVisible(false);
     }
 
+    //using the start() function on loading
     useEffect(() => {
         start();
 
     }, []);
 
+    //refreshing the flat list
     const handleRefresh = async () => {
         await start();
         setRefresh(false);
