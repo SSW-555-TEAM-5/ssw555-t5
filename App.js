@@ -11,6 +11,7 @@ import ViewRewardParent from './app/pages/guardian/ViewRewardParent';
 import SignUp from './app/pages/signup';
 import Login from './app/pages/login';
 import ProfileSelection from './app/pages/ProfileSelection';
+import StartUpScreen from './app/pages/StartUpScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
@@ -20,9 +21,37 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        
-      <Stack.Screen name="ChildHome" component={HomeScreenChild} options={{
-          headerStyle: { backgroundColor: 'white' },
+        <Stack.Screen name="ProfileSelection" component={ProfileSelection} options={{
+          headerShown: false,
+          headerTransparent: true,
+          headerTintColor: 'white',
+          headerShadowVisible: false,
+          headerBackVisible: true,
+          title: '',
+
+        }} />
+
+        <Stack.Screen name="StartUpScreen" component={StartUpScreen} options={{
+          headerShown: false,
+          headerTintColor: '#133C55',
+          headerShadowVisible: false,
+          headerShown: true,
+          title: '',
+        }} />
+
+        <Stack.Screen name="Login" component={Login} options={{
+          headerStyle: { backgroundColor: 'transparent' },
+          headerTransparent: true,
+          headerTintColor: 'white',
+          headerShadowVisible: false,
+          headerBackVisible: true,
+          title: '',
+
+        }} />
+
+
+        <Stack.Screen name="HomeScreenChild" component={HomeScreenChild} options={{
+          headerShown: false,
           headerTintColor: '#133C55',
           headerShadowVisible: false,
           headerShown: true,
@@ -37,15 +66,15 @@ export default function App() {
           title: '',
 
         }} />
-        <Stack.Screen name="ParentHome" component={HomeScreenParent} options={{
-          headerStyle: { backgroundColor: 'white' },
+        <Stack.Screen name="HomeScreenParent" component={HomeScreenParent} options={{
+          headerShown: false,
           headerTintColor: '#133C55',
           headerShadowVisible: false,
           headerShown: true,
           title: '',
         }} />
 
-      
+
         <Stack.Screen name="CreateChore" component={CreateChores} options={{
           headerStyle: { backgroundColor: 'white' },
           headerTintColor: '#133C55',
@@ -53,14 +82,14 @@ export default function App() {
           headerBackVisible: true,
           title: ''
         }} />
-         <Stack.Screen name="CreateReward" component={CreateReward} options={{
+        <Stack.Screen name="CreateReward" component={CreateReward} options={{
           headerStyle: { backgroundColor: 'white' },
           headerTintColor: '#133C55',
           headerShadowVisible: false,
           headerBackVisible: true,
           title: ''
         }} />
-        
+
         <Stack.Screen name="ViewChoreParent" component={ViewChoreParent} options={{
           headerStyle: { backgroundColor: 'transparent' },
           headerTransparent: true,
@@ -70,7 +99,7 @@ export default function App() {
           title: '',
 
         }} />
-         <Stack.Screen name="ViewRewardChild" component={ViewRewardChild} options={{
+        <Stack.Screen name="ViewRewardChild" component={ViewRewardChild} options={{
           headerStyle: { backgroundColor: 'transparent' },
           headerTransparent: true,
           headerTintColor: 'white',
@@ -88,33 +117,8 @@ export default function App() {
           title: '',
 
         }} />
-        <Stack.Screen name="ProfileSelection" component={ProfileSelection} options={{
-          headerStyle: { backgroundColor: 'transparent' },
-          headerTransparent: true,
-          headerTintColor: 'white',
-          headerShadowVisible: false,
-          headerBackVisible: true,
-          title: '',
 
-        }} />
-        <Stack.Screen name="Login" component={Login} options={{
-          headerStyle: { backgroundColor: 'transparent' },
-          headerTransparent: true,
-          headerTintColor: 'white',
-          headerShadowVisible: false,
-          headerBackVisible: true,
-          title: '',
 
-        }} />
-        <Stack.Screen name="SignUp" component={SignUp} options={{
-          headerStyle: { backgroundColor: 'transparent' },
-          headerTransparent: true,
-          headerTintColor: 'white',
-          headerShadowVisible: false,
-          headerBackVisible: true,
-          title: '',
-
-        }} />
 
       </Stack.Navigator>
     </NavigationContainer>
