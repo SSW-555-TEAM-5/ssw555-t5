@@ -21,15 +21,6 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="ProfileSelection" component={ProfileSelection} options={{
-          headerShown: false,
-          headerTransparent: true,
-          headerTintColor: 'white',
-          headerShadowVisible: false,
-          headerBackVisible: true,
-          title: '',
-
-        }} />
 
         <Stack.Screen name="StartUpScreen" component={StartUpScreen} options={{
           headerShown: false,
@@ -48,6 +39,30 @@ export default function App() {
           title: '',
 
         }} />
+
+        <Stack.Screen name="SignUp" component={SignUp} options={{
+          headerStyle: { backgroundColor: 'transparent' },
+          headerTransparent: true,
+          headerTintColor: 'white',
+          headerShadowVisible: false,
+          headerBackVisible: true,
+          title: '',
+
+        }} />
+
+        <Stack.Screen name="ProfileSelection" component={ProfileSelection} options={{
+          headerShown: false,
+          headerTransparent: true,
+          headerTintColor: 'white',
+          headerShadowVisible: false,
+          headerBackVisible: true,
+          title: '',
+
+        }} />
+
+
+
+
 
 
         <Stack.Screen name="HomeScreenChild" component={HomeScreenChild} options={{

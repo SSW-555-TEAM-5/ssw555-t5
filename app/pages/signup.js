@@ -92,7 +92,7 @@ export default function SignUp({ navigation }) {
                     onPress={async () => {
                         let result = await signUpWithEmail(fName, lName, email, password, avatarURL, guardianName, guardianPin);
                         if (result != null) {
-                            navigation.navigate("ProfileSelection", { accId: result, email: email });
+                            navigation.navigate("ProfileSelection", { accId: result });
                         }
                         else {
                             setModalVisible(true);
