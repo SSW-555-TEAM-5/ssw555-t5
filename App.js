@@ -10,8 +10,8 @@ import ViewChoreChild from './app/pages/child/ViewChoreChild';
 import ViewRewardParent from './app/pages/guardian/ViewRewardParent';
 import SignUp from './app/pages/signup';
 import Login from './app/pages/login';
-import ProfileSelection from './app/pages/ProfileSelection';
-import StartUpScreen from './app/pages/StartUpScreen';
+import ProfileSelection from './app/pages/profileSelection';
+import StartUpScreen from './app/pages/startupScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
@@ -24,6 +24,7 @@ export default function App() {
 
         <Stack.Screen name="StartUpScreen" component={StartUpScreen} options={{
           headerShown: false,
+          headerTransparent: true,
           headerTintColor: '#133C55',
           headerShadowVisible: false,
           headerShown: true,

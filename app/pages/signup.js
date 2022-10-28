@@ -18,7 +18,7 @@ export default function SignUp({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
 
     return (
-        <SafeAreaView style={styles.container}>
+        <>
             {/* sign up error modal */}
             <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { Alert.alert("Modal has been closed."); setModalVisible(!modalVisible); }}>
                 <View >
@@ -31,52 +31,40 @@ export default function SignUp({ navigation }) {
                     />
                 </View>
             </Modal>
-            <StatusBar style="light" />
-
-            <View>
-
-                <Text>First Name</Text>
+            <View style= {{flex: 1,justifyContent:'center'}}>
+            <View style = {styles.container}>
+                <Text style = {styles.textHeader}>First Name</Text>
+                <View style = {styles.textHeader}></View>
                 <TextInput
                     onChangeText={setFName}
                     placeholder={"George"}
                 />
-
-
-                <Text>Last Name</Text>
+                <Text style = {styles.textHeader}>Last Name</Text>
+                <View style = {styles.textHeader}></View>
                 <TextInput
                     onChangeText={setLName}
                     placeholder={"Washington"}
-
                 />
                 <Text>____________________________</Text>
-
-                <Text>Email</Text>
+                <Text style = {styles.textHeader}>Email</Text>
                 <TextInput
                     onChangeText={setEmail}
                     placeholder={"abc123@gmail.com"}
-
                 />
-
-                <Text>Password</Text>
+                <Text style = {styles.textHeader}>Password</Text>
                 <TextInput
                     onChangeText={setPassword}
                     placeholder={"Password"}
-
                 />
-
-                <Text>Guardian profile name</Text>
+                <Text style = {styles.textHeader}>Guardian profile name</Text>
                 <TextInput
                     onChangeText={setGuardianName}
                     placeholder={"guardian"}
-
                 />
-
-
-                <Text>Guardian Pin Password</Text>
+                <Text style = {styles.textHeader}>Guardian Pin Password</Text>
                 <TextInput
                     onChangeText={setGuardianPin}
                     placeholder={"1234"}
-
                 />
                 {/* 
                     <Button
@@ -102,24 +90,33 @@ export default function SignUp({ navigation }) {
                     color="#841584"
                 />
 
-               
-
+                    
+            </View>
             </View>
 
-        </SafeAreaView>
+        </>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        //justifyContent: 'center',
         backgroundColor: 'white',
         alignSelf: 'center',
-        position: 'absolute',
-        borderRadius: 20,
-        width: 338,
-        height: 577,
-        justifyContent: 'space-around',
+        borderRadius: '15%',
+        width: '75%',
+        height: "50%",
+        justifyContent: 'center'
     },
+    textHeader:{
+        fontSize:22,
+        color: 'darkblue'
+    },
+    textInput: {
+        borderColor: 'darkblue',
+        borderRadius: '15%',
+        borderWidth:'1%',
+        width: '80%',
+        height: '15%'
+    }
 });

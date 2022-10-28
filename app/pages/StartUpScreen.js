@@ -1,68 +1,52 @@
-
 import React from "react";
-import { useFonts, CinzelDecorative_400Regular, CinzelDecorative_700Bold, } from '@expo-google-fonts/cinzel-decorative';
-import { Montserrat_700Bold } from '@expo-google-fonts/montserrat'
-import { FlatList, View, Text, StyleSheet, Image, SafeAreaView, TextInput, TouchableOpacity, ScrollView, Button } from "react-native";
-
+import {View, Text, StyleSheet, Image, SafeAreaView, TouchableOpacity, ImageBackground} from "react-native";
 
 export default function StartUpScreen({ navigation }) {
 
-    let [isLoaded] = useFonts({
-        CinzelDecorative_400Regular,
-        CinzelDecorative_700Bold,
-        Montserrat_700Bold
-    });
-
     return (
-        <SafeAreaView style={styles.container}>
-            {/* <ImageBackground source={logo} style={{ width: '100%', height: '110%', justifyContent: 'flex-end', alignItems: 'center' }}></ImageBackground> */}
-            <View style={{ justifyContent: 'space-between', padding: 40, top: -150 }}>
-                <Text style={styles.fixToText}>CNS</Text>
-                <Text style={styles.text1}>ChoreNScore</Text>
+        
+        <ImageBackground source={require('../../assets/splash.png')} style={styles.image } resizeMode='stretch'>
+            <View>
+                <View style={ styles.logoWrapper }>
+                    <Text style = {{color:'black', fontSize:50}}>Chore</Text>
+                    <Text style = {{textAlign: "center", color: "#2ABAFF",fontSize: "50"}}>N</Text>
+                    <Text style = {{color:'black', fontSize:50}}>Score</Text>
+                </View>
+                <Text style = {styles.slogan}>Rewards For Chores</Text>
+                <View style = {{flexDirection:'row', justifyContent: 'center', justifyContent: 'space-evenly', bottom:'-80%'}}>
+                    <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                        <Text style = {styles.buttons}>Login</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+                        <Text style = {styles.buttons}>Sign Up</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-            <Button
-                onPress={() => navigation.navigate("Login")}
-                title="   Login  "
-                color="green"
-            />
-            <View style={{ height: 20 }} />
-            <Button
-                onPress={() => navigation.navigate("SignUp")}
-                title="Sign Up"
-                color="green"
-            />
-
-        </SafeAreaView>
-    );
+        </ImageBackground>
+    );    
 }
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'flex-end',
-        padding: 40,
         flex: 1,
-        flexDirection: 'column'
-
     },
-
-    fixToText: {
-        fontFamily: 'CinzelDecorative_700Bold',
-        fontWeight: '700',
-        fontSize: 121,
-        color: 'blue',
-        textShadowOffset: { width: 3, height: 3 },
-        textShadowRadius: 4,
-        textAlign: 'center',
+    image: {
+        flex: 1,
+        justifyContent: "center",
     },
-    text1: {
-        fontFamily: 'Montserrat_700Bold',
-        fontWeight: '700',
-        fontSize: 40,
-        textAlign: 'center',
-        textShadowColor: 'white',
-        textShadowRadius: 3,
-        textShadowOffset: { width: 1.5, height: 1.5 }
-
+    logoWrapper: {
+        flexDirection:'row' , 
+        justifyContent:'center'
     },
-
+    slogan: {
+        textAlign: "center",
+        color: "#0D0D0D",
+        opacity: 0.2,
+        fontSize: "20"
+    },
+    buttons: {
+        fontSize: 25, 
+        color: "#2ABAFF",
+        textAlign: "center"   
+    }
 });
