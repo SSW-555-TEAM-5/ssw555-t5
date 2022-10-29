@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Dimensions, ImageBackground, Alert, Modal, Text, Button, TextInput,SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { signUpWithEmail } from '../../firebase';
-// import { pickImage } from '../../upload-image';
+import { pickImage } from '../../upload-image';
 
 
 export default function SignUp({ navigation }) {
@@ -16,7 +16,7 @@ export default function SignUp({ navigation }) {
     const [guardianName, setGuardianName] = useState("");
     const [guardianPin, setGuardianPin] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
-
+    const [accidState, setAccidState] = useState(accId);
     return (
         <SafeAreaView style={styles.container}>
             {/* sign up error modal */}
@@ -78,19 +78,20 @@ export default function SignUp({ navigation }) {
                     placeholder={"1234"}
 
                 />
-                {/* 
+                
                     <Button
                         onPress={async () => {
-                            let image = await pickImage('avatars');
+                            let image = await pickImage(accidState+'/avatars');
                             setAvatarURL(image);
                         }}
                         title="Upload Profile Picture"
                         color="#841584"
-                    /> */}
+                    />
 
                 <Button
                     onPress={async () => {
                         let result = await signUpWithEmail(fName, lName, email, password, avatarURL, guardianName, guardianPin);
+                        //if signing up is successful, send to profile selection screen with seed account ID
                         if (result != null) {
                             navigation.navigate("ProfileSelection", { accId: result });
                         }

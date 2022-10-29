@@ -21,7 +21,15 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="ProfileSelection" component={ProfileSelection} options={{
+          headerShown: false,
+          headerTransparent: true,
+          headerTintColor: 'white',
+          headerShadowVisible: false,
+          headerBackVisible: true,
+          title: '',
 
+        }} />
         <Stack.Screen name="StartUpScreen" component={StartUpScreen} options={{
           headerShown: false,
           headerTintColor: '#133C55',
@@ -50,15 +58,7 @@ export default function App() {
 
         }} />
 
-        <Stack.Screen name="ProfileSelection" component={ProfileSelection} options={{
-          headerShown: false,
-          headerTransparent: true,
-          headerTintColor: 'white',
-          headerShadowVisible: false,
-          headerBackVisible: true,
-          title: '',
-
-        }} />
+        
 
 
 
