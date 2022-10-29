@@ -18,7 +18,7 @@ export default function CreateChores({ navigation, route }) {
     const [mode, setMode] = useState(null);
     const [show, setShow] = useState(false);
     const [rewardPoint, setReward] = useState(0);
-
+    const [imageURL, setImageURL] = useState("");
 
 
     const hostChore = async (choreName, rewardPoint, dDate, notes) => {

@@ -3,10 +3,10 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { getFirestore, doc, addDoc, collection, query, where, getDocs, getDoc, Timestamp } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
-import { FlatList, View, Text, StyleSheet, Image, SafeAreaView, TextInput, TouchableOpacity, ScrollView, Button } from "react-native";
+import { FlatList, View, Text, StyleSheet, Image, SafeAreaView, TextInput, TouchableOpacity, ScrollView, Button, Modal } from "react-native";
 import { Overlay } from 'react-native-elements';
 import NavBar from '../components/header';
-
+import { pickImage } from '../../upload-image';
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCz1itc7JT1NFYX1-X-I07ujw5jn_LGelc",
@@ -23,19 +23,35 @@ const auth = getAuth(app);
 const firestore = getFirestore(app);
 
 export default function ProfileSelection({ navigation, route }) {
-    const { accId} = route.params;
+    // const { accId } = route.params;
+    let accId = "3vv3AoFj0XPiO8edCQq8";
+
+    
+    const [accidState, setAccidState] = useState(accId);
     const [pin, setPin] = useState("");
+    const [newPName, setNewPName] = useState("");
+    const [avatarURL, setAvatarURL] = useState("");
+
     const [visible, setVisible] = useState(false);
     //Data format = {id: element,id2:element2}
     const [DATA, setDATA] = useState([]);
     const [refeshing, setRefresh] = useState(false);
-
+    const [modalVisible, setModalVisible] = useState(false);
     //switches overlay on and off
     const toggleOverlay = () => {
         if (visible == true) {
             setVisible(false);
         } else {
             setVisible(true);
+        }
+
+    };
+
+    const toggleOverlay2 = () => {
+        if (modalVisible == true) {
+            setModalVisible(false);
+        } else {
+            setModalVisible(true);
         }
 
     };
@@ -48,7 +64,7 @@ export default function ProfileSelection({ navigation, route }) {
             let arys = [];
             querySnapshot.forEach((doc) => {
                 let docData = doc.data();
-                arys.push({ id: doc.id, name: docData["profileName"] });
+                arys.push({ id: doc.id, name: docData["profileName"], imageURL: docData["avatar"] });
             });
             setDATA(arys);
 
@@ -92,6 +108,27 @@ export default function ProfileSelection({ navigation, route }) {
         setVisible(false);
     }
 
+    //add new profile
+    const addNewProfile = async () => {
+        try {
+
+            const profileData = {
+                name: newPName,
+                status: false,
+                totalPoint: 0,
+                avatar: avatarURL
+            }
+
+            const docRef = await addDoc(collection(firestore, "seed", accId, "Profiles"), profileData);
+            setModalVisible(false);
+            start();
+
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
     //using the start() function on loading
     useEffect(() => {
         start();
@@ -114,9 +151,9 @@ export default function ProfileSelection({ navigation, route }) {
                     <ScrollView style={{ width: '100%', padding: 10 }}>
 
                         <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap', width: "80%", height: '95%', borderWidth: .5, borderRadius: 8 }} onPress={async () => { guardStatus(item.name) }}>
-                            {/* <View style={{ flex: .5 }}>
+                            <View style={{ flex: .5 }}>
                                 <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
-                            </View> */}
+                            </View>
                             <View style={{ flexDirection: 'column', padding: 10 }}>
                                 <Text style={styles.infoTextTitle}>{item.name}</Text>
                             </View>
@@ -124,6 +161,12 @@ export default function ProfileSelection({ navigation, route }) {
 
                     </ScrollView>
                 )}
+            />
+
+            <Button
+                onPress={async () => { setModalVisible(true) }}
+                title="add new profile"
+                color="#841584"
             />
 
             <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
@@ -139,6 +182,32 @@ export default function ProfileSelection({ navigation, route }) {
                     title="Enter"
                     color="#841584"
                 />
+
+            </Overlay>
+
+            <Overlay isVisible={modalVisible} onBackdropPress={toggleOverlay2}>
+                <View >
+                    <Text>Enter profile name</Text>
+                    <TextInput
+                        onChangeText={setNewPName}
+                        placeholder={"Bob"}
+                    />
+
+
+                    <Button
+                        onPress={async () => {
+                            let image = await pickImage(accidState+'/avatars');
+                            setAvatarURL(image);
+                        }}
+                        title="Upload Profile Picture"
+                        color="#841584"
+                    />
+                    <Button
+                        onPress={async () => { addNewProfile() }}
+                        title="Add"
+                        color="#841584"
+                    />
+                </View>
             </Overlay>
         </SafeAreaView>
     );
