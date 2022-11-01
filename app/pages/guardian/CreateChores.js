@@ -3,14 +3,14 @@ import React, { useState } from 'react';
 import { Overlay } from 'react-native-elements';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { addDoc, collection } from 'firebase/firestore';
-
+import { pickImage } from '../../../upload-image';
 
 
 
 
 export default function CreateChores({ navigation, route }) {
     const [visible, setVisible] = useState(false);
-    const { firestore } = route.params;
+    const { firestore, accId } = route.params;
     const [chore, setChore] = useState("");
     const [notes, enterNotes] = useState("");
     const [choreId, setChoreId] = useState("");
@@ -21,13 +21,13 @@ export default function CreateChores({ navigation, route }) {
     const [imageURL, setImageURL] = useState("");
 
 
-    const hostChore = async (choreName, rewardPoint, dDate, notes) => {
+    const hostChore = async (choreName, rewardPoint, dDate, notes, imageURL) => {
 
         try {
 
-            const data = { chore: choreName, reward: rewardPoint, dueDate: dDate, note: notes }
+            const data = { chore: choreName, reward: rewardPoint, dueDate: dDate, note: notes, image: imageURL, finished: false, pending: false }
 
-            const docRef = await addDoc(collection(firestore, "chores"), data);
+            const docRef = await addDoc(collection(firestore, "seed", accId, "chores"), data);
 
             return docRef.id;
         } catch (e) {
@@ -57,13 +57,13 @@ export default function CreateChores({ navigation, route }) {
     };
 
     const hostEv = async () => {
-        setChoreId(await hostChore(chore, rewardPoint, date, notes));
+        setChoreId(await hostChore(chore, rewardPoint, date, notes, imageURL));
         toggleOverlay();
     };
 
     const viewChore = () => {
         setVisible(false);
-        navigation.navigate("ViewChore", { choreId, firestore })
+        navigation.navigate("ViewChoreParent", { firestore, accId, choreId  })
     };
 
     return (
@@ -110,6 +110,16 @@ export default function CreateChores({ navigation, route }) {
                     placeholder={"Do laundry for all family members"}
                 />
 
+
+                <Button
+                    onPress={async () => {
+                        let image = await pickImage(accId+'/chores');
+                        setImageURL(image);
+                    }}
+                    title="Upload picture for chore reference(optional)"
+                    color="#841584"
+                />
+
                 <Button
                     onPress={async () => { hostEv() }}
                     title="Create Chore"
@@ -124,7 +134,7 @@ export default function CreateChores({ navigation, route }) {
                         color="#841584"
                     />
                     <Button
-                        onPress={async () => { navigation.navigate("Home") }}
+                        onPress={async () => { navigation.navigate("HomeScreenParent") }}
                         title="Ok"
                         color="#841584"
                     />

@@ -11,12 +11,10 @@ export default function SignUp({ navigation }) {
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
     const [email, setEmail] = useState("");
-    const [avatarURL, setAvatarURL] = useState("");
     const [password, setPassword] = useState("");
     const [guardianName, setGuardianName] = useState("");
     const [guardianPin, setGuardianPin] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
-    const [accidState, setAccidState] = useState(accId);
     return (
         <SafeAreaView style={styles.container}>
             {/* sign up error modal */}
@@ -79,14 +77,6 @@ export default function SignUp({ navigation }) {
 
                 />
                 
-                    <Button
-                        onPress={async () => {
-                            let image = await pickImage(accidState+'/avatars');
-                            setAvatarURL(image);
-                        }}
-                        title="Upload Profile Picture"
-                        color="#841584"
-                    />
 
                 <Button
                     onPress={async () => {

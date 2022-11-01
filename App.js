@@ -90,7 +90,7 @@ export default function App() {
         }} />
 
 
-        <Stack.Screen name="CreateChore" component={CreateChores} options={{
+        <Stack.Screen name="CreateChores" component={CreateChores} options={{
           headerStyle: { backgroundColor: 'white' },
           headerTintColor: '#133C55',
           headerShadowVisible: false,

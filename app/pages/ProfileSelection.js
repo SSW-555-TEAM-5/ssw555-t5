@@ -84,7 +84,7 @@ export default function ProfileSelection({ navigation, route }) {
             let docData = doc.data();
             //if guardian profile is not selected, child homescreen is shown with corresponding profile
             if (docData["status"] == false) {
-                navigation.navigate("HomeScreenChild", { accId, docid: doc.id, firestore })
+                navigation.navigate("HomeScreenChild", { accId, docid: doc.id ,firestore })
             }
             else {
                 setVisible(true);
