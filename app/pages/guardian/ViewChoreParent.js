@@ -41,7 +41,7 @@ export default function ViewChoreParent({ navigation, route }) {
             name = docsData["profileName"];
           }
         });
-        
+
         arys.push({ id: doc.id, name: name, time: time.format('M/DD/YYYY hh:mm A'), imageURL: docData["image"] });
       });
       arys = arys.sort((a, b) => { return moment(a.time).diff(b.time) });
@@ -71,8 +71,12 @@ export default function ViewChoreParent({ navigation, route }) {
     }
   }
 
+  const confirmChore = async () => {
 
+  }
+  const declineChore = async () => {
 
+  }
 
   useEffect(() => {
     start();
@@ -96,7 +100,7 @@ export default function ViewChoreParent({ navigation, route }) {
 
             <ScrollView style={{ width: '100%', padding: 10 }}>
 
-            
+
               <View>
                 <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
               </View>
@@ -104,6 +108,16 @@ export default function ViewChoreParent({ navigation, route }) {
                 <Text style={styles.infoTextTitle}>{item.name}</Text>
                 <Text style={styles.infoTextTitle}>{item.time}</Text>
               </View>
+              <Button
+                onPress={async () => { confirmChore() }}
+                title="accept"
+                color="#841584"
+              />
+              <Button
+                onPress={async () => { declineChore() }}
+                title="decline"
+                color="#841584"
+              />
 
 
             </ScrollView>
