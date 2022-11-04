@@ -25,8 +25,14 @@ export default function HomeScreenParent({ navigation, route }) {
             querySnapshot.forEach((doc) => {
                 let docData = doc.data();
                 var time = docData["dueDate"];
+                let finished = "";
                 time = moment.unix(time.seconds).utc().local();
-                arys.push({ id: doc.id, name: docData["chore"], dueDate: time.format('M/DD/YYYY hh:mm A'), imageURL: docData["image"] });
+                if (docData["finished"] == true){
+                    finished = "Chore Finished";
+                } else{
+                    finished = "Chore NOT Finished";
+                }
+                arys.push({ id: doc.id, name: docData["chore"], dueDate: time.format('M/DD/YYYY hh:mm A'), imageURL: docData["image"] ,finished: finished });
             });
             arys = arys.sort((a, b) => { return moment(a.dueDate).diff(b.dueDate) });
             setDATA(arys);
@@ -75,6 +81,7 @@ export default function HomeScreenParent({ navigation, route }) {
                             <View style={{ flexDirection: 'column', padding: 10 }}>
                                 {/* chore card */}
                                 <Text style={styles.infoTextTitle}>{item.name}</Text>
+                                <Text style={styles.infoTextTitle}>{item.finished}</Text>
                                 <Text style={styles.infoText}>Due Date: {item.dueDate}</Text>
                             </View>
                         </TouchableOpacity>

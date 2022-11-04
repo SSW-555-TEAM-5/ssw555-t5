@@ -1,6 +1,6 @@
 import { SafeAreaView, View, Text, Image, StyleSheet, ImageBackground, FlatList, ScrollView, Button } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { getFirestore, doc, addDoc, collection, query, where, getDocs, getDoc, Timestamp } from 'firebase/firestore';
+import { getFirestore, doc, addDoc, collection, query, where, getDocs, getDoc, Timestamp, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
 import moment from 'moment';
 import { Overlay } from 'react-native-elements';
 import styles from '../../components/colors';
@@ -9,12 +9,12 @@ import styles from '../../components/colors';
 export default function ViewChoreParent({ navigation, route }) {
   const { accId, proId, choreId, firestore } = route.params;
 
-
+  const [choreFinished, setChoreFinished] = useState("Chore is not done yet");
   const [notes, setNotes] = useState("");
   const [date, setDate] = useState(moment());
   const [rewardPoint, setReward] = useState(0);
   const [choreName, setChoreName] = useState("");
-
+  const [avatarURL, setAvatarURL] = useState("");
   const [refeshing, setRefresh] = useState(false);
   //Data format = {id: element,id2:element2}
   const [DATA, setDATA] = useState([]);
@@ -24,35 +24,57 @@ export default function ViewChoreParent({ navigation, route }) {
   async function start() {
     try {
 
-      const q = query(collection(firestore, "seed", accId, "chores", choreId, "choreVerification"), where("confirmed", "==", false));
-      const querySnapshot = await getDocs(q);
-      let arys = [];
-      querySnapshot.forEach(async (doc) => {
-        let docData = doc.data();
-        let name = "";
-        var time = moment.unix(docData["time"]).utc().local();
-        const profile = collection(firestore, "seed", accId, "Profiles");
-        const profileSnapshot = await getDocs(profile);
-        profileSnapshot.forEach((docs) => {
-          let docsData = docs.data();
+    
+      const q2 = doc(firestore, "seed", accId, "chores", choreId);
+      const querySnapshot2 = await getDoc(q2);
+      const temp = querySnapshot2.data();
+      setDATA([]);
+      if (temp["finished"] == false) {
+        const q = query(collection(firestore, "seed", accId, "chores", choreId, "choreVerification"), where("confirmed", "==", false));
+        const querySnapshot = await getDocs(q);
+        let arys = [];
+        querySnapshot.forEach(async (doc) => {
+          let docData = doc.data();
+          let name = "";
+          var time = moment.unix(docData["time"]).utc().local();
+          const profile = collection(firestore, "seed", accId, "Profiles");
+          const profileSnapshot = await getDocs(profile);
+          profileSnapshot.forEach((docs) => {
+            let docsData = docs.data();
 
-          if (docs.id == docData["profile"]) {
+            if (docs.id == docData["profile"]) {
 
-            name = docsData["profileName"];
-          }
+              name = docsData["profileName"];
+            }
+          });
+
+          arys.push({ id: doc.id, name: name, time: time.format('M/DD/YYYY hh:mm A'), imageURL: docData["image"] });
+
         });
+        arys = arys.sort((a, b) => { return moment(a.time).diff(b.time) });
 
-        arys.push({ id: doc.id, name: name, time: time.format('M/DD/YYYY hh:mm A'), imageURL: docData["image"] });
-      });
-      arys = arys.sort((a, b) => { return moment(a.time).diff(b.time) });
-      setDATA(arys);
-      await getChoreInfo(accId, choreId)
+        setDATA(arys);
+        setChoreFinished("Chore is not done yet");
+      } else{
+        setChoreFinished("This chore has been completed");
+      }
+
+
+
+
+
+
+
+      await getChoreInfo(accId, choreId);
 
     } catch (e) {
       console.log(e);
     }
 
   }
+  useEffect(() => {
+    start();
+  }, []);
 
   const getChoreInfo = async (accId, cId) => {
     try {
@@ -71,16 +93,26 @@ export default function ViewChoreParent({ navigation, route }) {
     }
   }
 
-  const confirmChore = async () => {
-
+  const confirmChore = async (id) => {
+    const choreVRef = doc(firestore, "seed", accId, "chores", choreId, "choreVerification", id);
+    await updateDoc(choreVRef, { confirmed: true });
+    const choreRef = doc(firestore, "seed", accId, "chores", choreId);
+    const choreData = (await getDoc(choreRef)).data();
+    await updateDoc(choreRef, { finished: true });
+    const querySnapshot = await getDoc(choreVRef);
+    const choreV = querySnapshot.data();
+    const proRef = doc(firestore, "seed", accId, "Profiles", choreV["profile"]);
+    const profileD = (await getDoc(proRef)).data();
+    await updateDoc(proRef, { totalPoint: parseInt(profileD["totalPoint"]) + parseInt(choreData["reward"]) });
+    handleRefresh();
   }
-  const declineChore = async () => {
-
+  const declineChore = async (id) => {
+    const choreVRef = doc(firestore, "seed", accId, "chores", choreId, "choreVerification", id);
+    await updateDoc(choreVRef, { confirmed: true });
+    handleRefresh();
   }
 
-  useEffect(() => {
-    start();
-  }, []);
+
 
 
   const handleRefresh = async () => {
@@ -109,12 +141,12 @@ export default function ViewChoreParent({ navigation, route }) {
                 <Text style={styles.infoTextTitle}>{item.time}</Text>
               </View>
               <Button
-                onPress={async () => { confirmChore() }}
+                onPress={async () => { confirmChore(item.id) }}
                 title="accept"
                 color="#841584"
               />
               <Button
-                onPress={async () => { declineChore() }}
+                onPress={async () => { declineChore(item.id) }}
                 title="decline"
                 color="#841584"
               />
@@ -124,6 +156,7 @@ export default function ViewChoreParent({ navigation, route }) {
           )}
         />
         <View style={{ alignItems: "center", padding: 15 }}>
+        <Text style={styles.whiteTextBold}>{choreFinished}</Text>
           <Text style={styles.whiteTextBold}>{choreName}</Text>
 
           <Text style={styles.whiteTextReg}>{date.format('hh:mm A')} </Text>

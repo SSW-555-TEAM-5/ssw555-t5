@@ -15,7 +15,7 @@ export default function ViewChoreChild({ navigation, route }) {
   const [date, setDate] = useState(moment());
   const [rewardPoint, setReward] = useState(0);
   const [choreName, setChoreName] = useState("");
-
+  const [disabled, setDisabled] = useState(false);
   const [visible, setVisible] = useState(false);
   const [status, setStatus] = useState("");
   const [refeshing, setRefresh] = useState(false);
@@ -51,7 +51,7 @@ export default function ViewChoreChild({ navigation, route }) {
   const pickInfo = async () => {
     try {
       let image = await pickImage(accId + '/choreVerification');
-      let now = moment.now().unix().utc();
+      let now = moment.now();
   
       const vData = {
         profile: proId,
@@ -61,7 +61,7 @@ export default function ViewChoreChild({ navigation, route }) {
       }
 
       const docRef = await addDoc(collection(firestore, "seed", accId, "chores", choreId, "choreVerification"), vData);
-      await updateDoc(doc(firestore, "seed", accId, "chores", choreId), { pending: arrayUnion(docRef) });
+      await updateDoc(doc(firestore, "seed", accId, "chores", choreId));
       toggleOverlay();
     } catch (e) {
       console.log(e);
@@ -108,12 +108,16 @@ export default function ViewChoreChild({ navigation, route }) {
           onPress={async () => {
 
 
-            const ref = collection(firestore, "seed", accId, "chores", choreId, "choreVerification");
-            const q = query(ref, where("confirmed", "==", true));
-            const querySnapshot = await getDocs(q);
-            if (querySnapshot.size > 0) {
-              setTitleText("this request has already been confirmed");
+            const ref = doc(firestore, "seed", accId, "chores", choreId);
+            const q = await getDoc(ref);
+            const querySnapshot = q.data();
+            if (querySnapshot["finished"] == true) {
+              setTitleText("this request has already been confirmed (Please press anywhere outside of this overlay)");
+              setDisabled(true);
+            }else{
+              setDisabled(false);
             }
+            
             toggleOverlay()
 
 
@@ -133,11 +137,13 @@ export default function ViewChoreChild({ navigation, route }) {
           <Text style={styles.titleText}>{titleText}</Text>
           <Button
             onPress={async () => {
-              pickInfo();
-
+              setDisabled(true);
+              await pickInfo();
+            
             }}
             title="pick image"
             color="#841584"
+            disabled = {disabled}
           />
 
         </Overlay>
