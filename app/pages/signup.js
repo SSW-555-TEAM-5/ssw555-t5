@@ -4,19 +4,17 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Dimensions, ImageBackground, Alert, Modal, Text, TouchableOpacity, TextInput,SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { signUpWithEmail } from '../../firebase';
-// import { pickImage } from '../../upload-image';
+import { pickImage } from '../../upload-image';
 
 
 export default function SignUp({ navigation }) {
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
     const [email, setEmail] = useState("");
-    const [avatarURL, setAvatarURL] = useState("");
     const [password, setPassword] = useState("");
     const [guardianName, setGuardianName] = useState("");
     const [guardianPin, setGuardianPin] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
-
     return (
         <>
             {/* sign up error modal */}
@@ -95,9 +93,11 @@ export default function SignUp({ navigation }) {
                     </View>    
             </View>
 
+
                 <TouchableOpacity
                     onPress={async () => {
                         let result = await signUpWithEmail(fName, lName, email, password, avatarURL, guardianName, guardianPin);
+                        //if signing up is successful, send to profile selection screen with seed account ID
                         if (result != null) {
                             navigation.navigate("ProfileSelection", { accId: result });
                         }

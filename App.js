@@ -21,7 +21,15 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="ProfileSelection" component={ProfileSelection} options={{
+          headerShown: false,
+          headerTransparent: true,
+          headerTintColor: 'white',
+          headerShadowVisible: false,
+          headerBackVisible: true,
+          title: '',
 
+        }} />
         <Stack.Screen name="StartUpScreen" component={StartUpScreen} options={{
           headerShown: false,
           headerTransparent: true,
@@ -51,15 +59,7 @@ export default function App() {
 
         }} />
 
-        <Stack.Screen name="ProfileSelection" component={ProfileSelection} options={{
-          headerShown: false,
-          headerTransparent: true,
-          headerTintColor: 'white',
-          headerShadowVisible: false,
-          headerBackVisible: true,
-          title: '',
-
-        }} />
+        
 
 
 
@@ -91,7 +91,7 @@ export default function App() {
         }} />
 
 
-        <Stack.Screen name="CreateChore" component={CreateChores} options={{
+        <Stack.Screen name="CreateChores" component={CreateChores} options={{
           headerStyle: { backgroundColor: 'white' },
           headerTintColor: '#133C55',
           headerShadowVisible: false,

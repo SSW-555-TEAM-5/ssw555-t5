@@ -13,20 +13,19 @@ export default function HomeScreenChild({ navigation, route }) {
     const [refeshing, setRefresh] = useState(false);
 
 
-
     async function start() {
         try {
 
-            const q = query(collection(firestore, "chores"), where("chore", ">=", ""));
+            const q = query(collection(firestore, "seed", accId,"chores"), where("chore", ">=", ""));
             const querySnapshot = await getDocs(q);
             let arys = [];
             querySnapshot.forEach((doc) => {
                 let docData = doc.data();
                 var time = docData["dueDate"];
                 time = moment.unix(time.seconds).utc().local();
-                arys.push({ id: doc.id, name: docData["chore"], dueDate: time.format('M/DD/YYYY hh:mm A') });
+                arys.push({ id: doc.id, name: docData["chore"], dueDate: time.format('M/DD/YYYY hh:mm A'), imageURL: docData["image"] });
             });
-            arys = arys.sort((a, b) => { return moment(a.date).diff(b.date) });
+            arys = arys.sort((a, b) => { return moment(a.dueDate).diff(b.dueDate) });
             setDATA(arys);
 
         } catch (e) {
@@ -42,7 +41,7 @@ export default function HomeScreenChild({ navigation, route }) {
     const search = async () => {
         try {
 
-            const q = query(collection(firestore, "chores"), where("chore", ">=", searchText), where("chore", "<=", searchText + "~"));
+            const q = query(collection(firestore, "seed", accId,"chores"), where("chore", ">=", searchText), where("chore", "<=", searchText + "~"));
             const querySnapshot = await getDocs(q);
             let ary = [];
             querySnapshot.forEach((doc) => {
@@ -51,7 +50,7 @@ export default function HomeScreenChild({ navigation, route }) {
                 time = moment.unix(time.seconds).utc().local();
                 ary.push({ id: doc.id, name: docData["chore"], dueDate: time.format('M/DD/YYYY hh:mm A') });
             });
-            ary = ary.sort((a, b) => { return moment(a.date).diff(b.date) });
+            ary = ary.sort((a, b) => { return moment(a.dueDate).diff(b.dueDate) });
             setDATA(ary);
 
         } catch (e) {
@@ -80,10 +79,10 @@ export default function HomeScreenChild({ navigation, route }) {
                 renderItem={({ item }) => (
                     <ScrollView style={{ width: '100%', padding: 10 }}>
 
-                        <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap', width: "80%", height: '95%', borderWidth: .5, borderRadius: 8 }} onPress={() => navigation.navigate("ViewChoreChild", { choreId: item.id, firestore })}>
-                            {/* <View style={{ flex: .5 }}>
+                        <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap', width: "80%", height: '95%', borderWidth: .5, borderRadius: 8 }} onPress={() => {navigation.navigate("ViewChoreChild", { accId, proId:docid,choreId: item.id, firestore })}}>
+                            <View style={{ flex: .5 }}>
                                 <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
-                            </View> */}
+                            </View>
                             <View style={{ flexDirection: 'column', padding: 10 }}>
                                 {/*meal info */}
                                 <Text style={styles.infoTextTitle}>{item.name}</Text>

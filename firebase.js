@@ -51,7 +51,6 @@ export const logInWithEmail = async (email, password) => {
         querySnapshot.forEach((doc) => {
             returnString = doc.id;
         });
-        console.log(returnString);
         return returnString
     } catch (e) {
         console.log(e);
@@ -77,13 +76,14 @@ const addNewUser = async (fName, lName, email, avatarURL, guardianName, guardian
             first_name: fName,
             last_name: lName,
             email: email,
-            avatar: avatarURL
+            
         }
         //When new user is made, guardian profile is automattically name with information inputted
         const guardianData = {
             profileName: guardianName,
             pin: guardianPin,
-            status: true
+            status: true,
+            avatar: avatarURL
         }
         
         const docRef = await addDoc(collection(firestore, "seed",), userData);
@@ -97,3 +97,4 @@ const addNewUser = async (fName, lName, email, avatarURL, guardianName, guardian
         console.log(e);
     }
 }
+
