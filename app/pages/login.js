@@ -13,11 +13,13 @@ export default function Login({ navigation }) {
             {/* login error modal */}
             
             <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { Alert.alert("Modal has been closed."); setModalVisible(!modalVisible); }}>
+                <View style={{flex: 1, justifyContent: 'center'}}>
                 <View style={{justifyContent:'center', width:'80%', height:'30%', backgroundColor: 'white', borderRadius:'20%', alignSelf:'center', alignItems:'center'}}>
-                    <Text style = {{textAlign:'center', fontSize:20}}>Incorrect Username or Password!</Text>
-                    <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-                        <Text style = {{textAlign:'center', fontSize:25, color:'#2ABAFF'}}> Try Again </Text>
+                    <Text style = {{textAlign:'center', fontSize:20, padding:'3%'}}>Incorrect Username or Password!</Text>
+                    <TouchableOpacity onPress={() => setModalVisible(!modalVisible)} style={{backgroundColor:'#2ABAFF',borderRadius:'8%'}}>
+                        <Text style = {{textAlign:'center', fontSize: 20, color:'white', padding:'2%', }}>Try Again </Text>
                     </TouchableOpacity>
+                </View>
                 </View>
             </Modal>
             <View style={{flex:1, justifyContent:'center'}}>
@@ -46,8 +48,8 @@ export default function Login({ navigation }) {
                         else {
                             setModalVisible(true);
                         }
-                    }}>
-                        <Text style = {{color:'#2ABAFF', fontSize: 25}}> Login</Text>
+                    }} style = {{backgroundColor:'#2ABAFF', width: '35%', alignSelf:'center', padding:'2%', borderRadius:'4%'}}>
+                        <Text style = {{color:'white', fontSize: 20, alignSelf: 'center'}}>Login</Text>
                     
                     </TouchableOpacity>
             </View>
@@ -58,12 +60,13 @@ export default function Login({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center',
         backgroundColor: 'white',
         alignSelf: 'center',
         borderRadius: '15%',
         paddingTop: '5%',
         paddingBottom: '5%',
+        paddingLeft: '5%',
+        paddingRight: '5%',
         width: '80%',
         height: "30%",
         justifyContent: 'space-between'
@@ -71,13 +74,15 @@ const styles = StyleSheet.create({
     textInput: {
         borderColor: 'gray',
         borderWidth:'1%',
-        width: '70%',
+        width: '100%',
         borderRadius:'4%',
         padding:'2%',
        
     },
     textHeader: {
         fontSize: '25%',
-        color: 'darkgray'
+        textAlign: 'left',
+        color: 'black',
+        
     }
 });
