@@ -32,6 +32,7 @@ export default function App() {
         }} />
         <Stack.Screen name="StartUpScreen" component={StartUpScreen} options={{
           headerShown: false,
+          headerTransparent: true,
           headerTintColor: '#133C55',
           headerShadowVisible: false,
           headerShown: true,
