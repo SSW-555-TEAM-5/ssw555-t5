@@ -5,7 +5,6 @@ import { getFirestore, doc, addDoc, collection, query, where, getDocs, getDoc, T
 import React, { useEffect, useState } from 'react';
 import { FlatList, View, Text, StyleSheet, Image, SafeAreaView, TextInput, TouchableOpacity, ScrollView, Button, Modal } from "react-native";
 import { Overlay } from 'react-native-elements';
-import NavBar from '../components/header';
 import { pickImage } from '../../upload-image';
 // Your web app's Firebase configuration
 const firebaseConfig = {

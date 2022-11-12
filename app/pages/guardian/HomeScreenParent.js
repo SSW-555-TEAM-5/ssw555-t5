@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import moment from 'moment';
 import styles from '../../components/colors';
-import { FlatList, SafeAreaView, View, ScrollView, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
+import { FlatList, SafeAreaView, View, ScrollView, Text, TouchableOpacity, StyleSheet, Button, Image } from 'react-native';
 
 
 
@@ -19,7 +19,7 @@ export default function HomeScreenParent({ navigation, route }) {
     async function start() {
         try {
 
-            const q = query(collection(firestore, "seed", accId,"chores"), where("chore", ">=", ""));
+            const q = query(collection(firestore, "seed", accId, "chores"), where("chore", ">=", ""));
             const querySnapshot = await getDocs(q);
             let arys = [];
             querySnapshot.forEach((doc) => {
@@ -27,12 +27,12 @@ export default function HomeScreenParent({ navigation, route }) {
                 var time = docData["dueDate"];
                 let finished = "";
                 time = moment.unix(time.seconds).utc().local();
-                if (docData["finished"] == true){
+                if (docData["finished"] == true) {
                     finished = "Chore Finished";
-                } else{
+                } else {
                     finished = "Chore NOT Finished";
                 }
-                arys.push({ id: doc.id, name: docData["chore"], dueDate: time.format('M/DD/YYYY hh:mm A'), imageURL: docData["image"] ,finished: finished });
+                arys.push({ id: doc.id, name: docData["chore"], dueDate: time.format('M/DD/YYYY hh:mm A'), imageURL: docData["image"], finished: finished });
             });
             arys = arys.sort((a, b) => { return moment(a.dueDate).diff(b.dueDate) });
             setDATA(arys);
@@ -67,7 +67,25 @@ export default function HomeScreenParent({ navigation, route }) {
                 color="#841584"
             />
 
+            <Button
+                onPress={() => {
 
+                    navigation.navigate("CreateReward", { firestore, accId });
+
+                }}
+                title="Create Rewards"
+                color="#841584"
+            />
+
+            <Button
+                onPress={() => {
+
+                    navigation.navigate("ViewRewardParent", { firestore, accId });
+
+                }}
+                title="ViewRewardParent"
+                color="#841584"
+            />
 
             <FlatList
                 keyExtractor={(item) => item.id}
@@ -77,7 +95,10 @@ export default function HomeScreenParent({ navigation, route }) {
                 renderItem={({ item }) => (
                     <ScrollView style={{ width: '100%', padding: 10 }}>
 
-                        <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap', width: "80%", height: '95%', borderWidth: .5, borderRadius: 8 }} onPress={() => navigation.navigate("ViewChoreParent", { accId, proId:docid,choreId: item.id, firestore  })}>
+                        <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap', width: "80%", height: '95%', borderWidth: .5, borderRadius: 8 }} onPress={() => navigation.navigate("ViewChoreParent", { accId, proId: docid, choreId: item.id, firestore })}>
+                            <View style={{ flex: .5 }}>
+                                <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
+                            </View>
                             <View style={{ flexDirection: 'column', padding: 10 }}>
                                 {/* chore card */}
                                 <Text style={styles.infoTextTitle}>{item.name}</Text>

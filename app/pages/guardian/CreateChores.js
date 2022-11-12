@@ -134,7 +134,7 @@ export default function CreateChores({ navigation, route }) {
                         color="#841584"
                     />
                     <Button
-                        onPress={async () => { navigation.navigate("HomeScreenParent") }}
+                        onPress={async () => { navigation.goBack() }}
                         title="Ok"
                         color="#841584"
                     />

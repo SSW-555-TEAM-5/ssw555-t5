@@ -15,7 +15,7 @@ export default function HomeScreenChild({ navigation, route }) {
 
     async function start() {
         try {
-
+            console.log(docid);
             const q = query(collection(firestore, "seed", accId,"chores"), where("chore", ">=", ""));
             const querySnapshot = await getDocs(q);
             let arys = [];
@@ -71,6 +71,15 @@ export default function HomeScreenChild({ navigation, route }) {
     return (
         <SafeAreaView>
             <NavBar />
+            <Button
+                onPress={() => {
+
+                    navigation.navigate("ViewRewardChild", { firestore, accId, docid:docid });
+
+                }}
+                title="ViewRewardChild"
+                color="#841584"
+            />
             <FlatList
                 keyExtractor={(item) => item.id}
                 data={DATA}

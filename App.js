@@ -2,7 +2,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreenChild from './app/pages/child/HomeScreenChild';
 import HomeScreenParent from './app/pages/guardian/HomeScreenParent';
-import CreateReward from './app/pages/child/CreateReward'
+import CreateReward from './app/pages/guardian/CreateReward'
 import CreateChores from './app/pages/guardian/CreateChores';
 import ViewRewardChild from './app/pages/child/ViewRewardChild';
 import ViewChoreParent from './app/pages/guardian/ViewChoreParent';

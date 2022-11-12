@@ -24,7 +24,7 @@ export default function ViewChoreParent({ navigation, route }) {
   async function start() {
     try {
 
-    
+
       const q2 = doc(firestore, "seed", accId, "chores", choreId);
       const querySnapshot2 = await getDoc(q2);
       const temp = querySnapshot2.data();
@@ -55,7 +55,7 @@ export default function ViewChoreParent({ navigation, route }) {
 
         setDATA(arys);
         setChoreFinished("Chore is not done yet");
-      } else{
+      } else {
         setChoreFinished("This chore has been completed");
       }
 
@@ -120,9 +120,31 @@ export default function ViewChoreParent({ navigation, route }) {
     setRefresh(false);
   }
   return (
-    <View>
+    <SafeAreaView>
+      <View style={{ alignItems: "center", padding: 15 }}>
+        <Text style={styles.whiteTextBold}>{choreFinished}</Text>
+        <Text style={styles.whiteTextBold}>{choreName}</Text>
 
-      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <Text style={styles.whiteTextReg}>{date.format('hh:mm A')} </Text>
+
+
+
+
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
+          <Text style={styles.white_smallTextReg}> {date.format('M/DD/YYYY')} </Text>
+        </View>
+        <Text style={styles.whiteTextReg}> Reward: {rewardPoint} </Text>
+      </View>
+
+
+      <View >
+        <View style={{ flexDirection: "column", padding: 10, flex: .5 }}>
+          <Text style={styles.black_smallTextBold}>Notes:</Text>
+          <Text> {notes} </Text>
+        </View>
+      </View>
+      <SafeAreaView>
         <FlatList
           keyExtractor={(item) => item.id}
           data={DATA}
@@ -133,9 +155,9 @@ export default function ViewChoreParent({ navigation, route }) {
             <ScrollView style={{ width: '100%', padding: 10 }}>
 
 
-              <View>
-                <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
-              </View>
+              <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
+
+
               <View style={{ flexDirection: 'column', padding: 10 }}>
                 <Text style={styles.infoTextTitle}>{item.name}</Text>
                 <Text style={styles.infoTextTitle}>{item.time}</Text>
@@ -155,39 +177,22 @@ export default function ViewChoreParent({ navigation, route }) {
             </ScrollView>
           )}
         />
-        <View style={{ alignItems: "center", padding: 15 }}>
-        <Text style={styles.whiteTextBold}>{choreFinished}</Text>
-          <Text style={styles.whiteTextBold}>{choreName}</Text>
-
-          <Text style={styles.whiteTextReg}>{date.format('hh:mm A')} </Text>
+      </SafeAreaView>
 
 
 
 
 
-          <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-            <Text style={styles.white_smallTextReg}> {date.format('M/DD/YYYY')} </Text>
-          </View>
-          <Text style={styles.whiteTextReg}> Reward: {rewardPoint} </Text>
-        </View>
+      <Button
+        onPress={async () => { navigation.navigate("HomeScreenParent", { accId, choreId, firestore }) }}
+        title="Ok"
+        color="#841584"
+      />
 
 
-        <View >
-          <View style={{ flexDirection: "column", padding: 10, flex: .5 }}>
-            <Text style={styles.black_smallTextBold}>Notes:</Text>
-            <Text> {notes} </Text>
-          </View>
-        </View>
+    </SafeAreaView>
 
 
 
-        <Button
-          onPress={async () => { navigation.navigate("HomeScreenParent", { accId, choreId, firestore }) }}
-          title="Ok"
-          color="#841584"
-        />
-
-      </ScrollView>
-    </View>
   );
 }
