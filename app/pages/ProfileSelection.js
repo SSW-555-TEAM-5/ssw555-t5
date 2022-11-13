@@ -22,8 +22,8 @@ const auth = getAuth(app);
 const firestore = getFirestore(app);
 
 export default function ProfileSelection({ navigation, route }) {
-    // const { accId } = route.params;
-    let accId = "3vv3AoFj0XPiO8edCQq8";
+    const { accId } = route.params;
+    //let accId = "3vv3AoFj0XPiO8edCQq8";
 
     
     const [accidState, setAccidState] = useState(accId);
