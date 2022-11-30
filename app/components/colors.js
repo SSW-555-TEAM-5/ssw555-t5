@@ -15,14 +15,15 @@ export default StyleSheet.create({
         borderBottomLeftRadius: 8
     },
     infoTextTitle:{
-        fontSize:14,
+        fontSize:25,
         textAlign: 'left',
         fontWeight: 'bold',
+        color: "#2ABAFF"
     },
     infoText: {
         color: 'gray',
         textAlign: 'left',
-        fontSize: 12,
+        fontSize: 20
     },
     linkText:{
         textAlign:'left',

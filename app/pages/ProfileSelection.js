@@ -142,6 +142,7 @@ export default function ProfileSelection({ navigation, route }) {
     }
     return (
         <SafeAreaView>
+            <View style = {{paddingVertical:'15%'}}>
             <FlatList
                 
                 keyExtractor={(item) => item.id}
@@ -150,24 +151,15 @@ export default function ProfileSelection({ navigation, route }) {
                 onRefresh={handleRefresh}
                 // numColumns= {3}
                 renderItem={({ item }) => (
-                    <ScrollView style={{ width: '100%', padding: 10 }}>
-
-                        {/* <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap', width: "80%", height: '95%', borderWidth: .5, borderRadius: 8 }} onPress={async () => { guardStatus(item.name) }}> */}
+                    <View style={{ width: '100%', padding: 10 }}>
                         <TouchableOpacity onPress={async () => { guardStatus(item.name) }}>
                             <Card>
                                 <Card.Cover source={{ uri: item.imageURL }}/>
-                                {/* <Card.Image source={item.imageURL}/> */}
                                 <Card.Title title={item.name} />
                             </Card>
-                            {/* <View style={{ flex: .5 }}>
-                                <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
-                            </View>
-                            <View style={{ flexDirection: 'column', padding: 10 }}>
-                                <Text style={styles.infoTextTitle}>{item.name}</Text>
-                            </View> */}
                         </TouchableOpacity>
 
-                    </ScrollView>
+                    </View>
                 )}
             />
 
@@ -176,7 +168,7 @@ export default function ProfileSelection({ navigation, route }) {
                 title="add new profile"
                 color="#841584"
             />
-
+            </View>
             <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
 
                 <Text>Enter Pin</Text>

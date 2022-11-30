@@ -1,10 +1,10 @@
-import { SafeAreaView, View, Text, Image, StyleSheet, ImageBackground, FlatList, ScrollView, Button, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, Text, Image, StyleSheet, ImageBackground, FlatList, ScrollView, Button, TouchableOpacity, Linking } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { getFirestore, doc, addDoc, collection, query, where, getDocs, getDoc, Timestamp, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
 import moment from 'moment';
 import { Overlay } from 'react-native-elements';
 import styles from '../../components/colors';
-
+import { Card, Paragraph } from 'react-native-paper';
 export default function ViewRewardChild({ navigation, route }) {
   const { firestore, accId, docid } = route.params;
 
@@ -55,8 +55,8 @@ export default function ViewRewardChild({ navigation, route }) {
 
     <SafeAreaView>
 
-      <Text>Acitve Rewards</Text>
-      <Text>Total Points: {points}</Text>
+      <Text style={{fontSize: 30, textAlign:'center', color: "#2ABAFF"}}>Acitve Rewards</Text>
+      <Text style= {{fontStyle:"italic", textAlign:'center', fontSize: 20, color:'gray', paddingBottom:15}}>Total Points: {points}</Text>
 
       <FlatList
         keyExtractor={(item) => item.id}
@@ -66,8 +66,8 @@ export default function ViewRewardChild({ navigation, route }) {
         renderItem={({ item }) => (
           <ScrollView style={{ width: '100%', padding: 10 }}>
 
-            <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap', width: "100%", height: '100%', borderWidth: .5, borderRadius: 8 }}>
-              <View style={{ flex: .5 }}>
+            <TouchableOpacity onPress = {() => Linking.canOpenURL(item.imageURL).then(() => {Linking.openURL(item.imageURL);})}>
+              {/* <View style={{ flex: .5 }}>
                 <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%' }} />
               </View>
 
@@ -77,7 +77,16 @@ export default function ViewRewardChild({ navigation, route }) {
                 <Text style={styles.infoTextTitle}>URL: {item.referenceURL}</Text>
                 <Text style={styles.infoTextTitle}>Points: {item.points}</Text>
 
-              </View>
+              </View> */}
+
+              <Card>
+                <Card.Cover source={{ uri: item.imageURL }}/>
+                <Card.Title title={item.name} titleStyle={styles.infoTextTitle} />
+                <Card.Content>
+                  <Paragraph style={styles.infoText}>Points: {item.points}</Paragraph>
+                </Card.Content>
+              </Card>
+
               <Button
                 onPress={async () => {
                   const pro = doc(firestore, "seed", accId, "Profiles", docid);
@@ -95,7 +104,6 @@ export default function ViewRewardChild({ navigation, route }) {
                 color="#841584"
               />
             </TouchableOpacity>
-
           </ScrollView>
         )}
       />

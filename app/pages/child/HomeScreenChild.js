@@ -4,6 +4,8 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import moment from 'moment';
 import NavBar from "../../components/header.js";
 import styles from '../../components/colors';
+// import { Title, Paragraph } from 'react-native-elements';
+import { Card, Paragraph } from 'react-native-paper';
 export default function HomeScreenChild({ navigation, route }) {
     const [searchText, enterSearch] = useState("");
 
@@ -69,36 +71,35 @@ export default function HomeScreenChild({ navigation, route }) {
         setRefresh(false);
     }
     return (
-        <SafeAreaView style={{padding:'10%'}}>
-            <View style={{flexDirection: 'row'}}>
-                <Text style={{fontSize: 18}}>Welcome, </Text>
-                <Image source = {require('../../../assets/childprofile.jpeg')} style = {{width:100, height:100, alignSelf: 'flex-end'}}/>
-            </View>
-            <NavBar navigation={navigation} route={route} />
-            <FlatList
-                keyExtractor={(item) => item.id}
-                data={DATA}
-                refreshing={refeshing}
-                onRefresh={handleRefresh}
-                renderItem={({ item }) => (
-                    <ScrollView style={{ width: '100%', padding: 10 }}>
+        <View style={{backgroundColor: "white", flex:1}}>
+            <SafeAreaView style={{padding:'10%',backgroundColor: "white"}}>
+                <Text style={{fontSize: 30, textAlign:'center', color: "#2ABAFF"}}> Welcome! </Text>
+                <Text style= {{fontStyle:"italic", textAlign:'center', fontSize: 20, color:'gray'}}>Time to do chores!</Text>
+                <NavBar navigation={navigation} route={route} />
+                <FlatList
+                    keyExtractor={(item) => item.id}
+                    data={DATA}
+                    refreshing={refeshing}
+                    onRefresh={handleRefresh}
+                    renderItem={({ item }) => (
+                        <View style={{ width: '100%', paddingVertical: '10%', backgroundColor:'white' }}>
+                            <TouchableOpacity onPress={() => {navigation.navigate("ViewChoreChild", { accId, proId:docid,choreId: item.id, firestore })}}>
 
-                        <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap', width: "80%", height: '95%', borderWidth: .5, borderRadius: 8 }} onPress={() => {navigation.navigate("ViewChoreChild", { accId, proId:docid,choreId: item.id, firestore })}}>
-                            <View style={{ flex: .5 }}>
-                                <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
-                            </View>
-                            <View style={{ flexDirection: 'column', padding: 10 }}>
-                                {/*meal info */}
-                                <Text style={styles.infoTextTitle}>{item.name}</Text>
-                                <Text style={styles.infoText}>Due Date: {item.dueDate}</Text>
-                            </View>
-                        </TouchableOpacity>
+                                <Card>
+                                    <Card.Cover source={{ uri: item.imageURL }}/>
+                                    <Card.Title title={item.name} titleStyle={styles.infoTextTitle} />
+                                    <Card.Content>
+                                        <Paragraph style={styles.infoText}>Due Date: {item.dueDate}</Paragraph>
+                                    </Card.Content>
+                                </Card>
+                            </TouchableOpacity>
 
-                    </ScrollView>
-                )}
-            />
+                        </View>
+                    )}
+                />
 
 
-        </SafeAreaView>
+            </SafeAreaView>
+        </View>
     );
 }
