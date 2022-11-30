@@ -1,30 +1,25 @@
-import { FlatList,View, Text, StyleSheet, Image, SafeAreaView,TouchableOpacity, ScrollView} from "react-native";
+import {View, Text,SafeAreaView,TouchableOpacity, ScrollView} from "react-native";
+
+
+
 
 //should intake user account so that user name can be displayed, the rest of the info should be constant
 // should intake which screen is selected so that the selection can be constantly highlighted so that the page is indicated
-export default function NavBar(){
+export default function NavBar({ navigation,route}) {
+    const { accId, docid,firestore } = route.params;
     return (
-        <SafeAreaView>
-            <View style = {{flex:1/6, flexDirection: "row", justifyContent: "space-evenly", padding: "2%"}}>
-                <TouchableOpacity>
-                    {/* should be replaced with an icon */}
-                    <Text> switch account </Text>
-                </TouchableOpacity>
-                <Text> ChoreNScore </Text>
-            </View>
-            <SafeAreaView style = {{flex:4/6, flexDirection:"row", justifyContent: "space-evenly", padding: "2%"}}>
-                <View style = {{flex:5/6, flexDirection: "column", justifyContent: "center"}}>
-                    <Text style = {{fontSize:45}}> Welcome, </Text>
-                    <Text style = {{fontSize:45}}> UserName</Text>
-                </View>
-                <Image source = {require('../../assets/childprofile.jpeg')} style = {{width:100, height:100}}/>
-            </SafeAreaView>
-            <ScrollView style = {{flex:1/6, padding: "2%"}} contentContainerStyle = {{flexDirection:"row", justifyContent: "space-evenly"}}>
+        <View>
+            <ScrollView horizontal = {true} pagingEnabled = {true} style={{flexDirection:'row', padding:'2%'}} contentContainerStyle = {{justifyContent:'space-around', flexDirection:'row', padding: '10%'}}>
                 <TouchableOpacity>
                     <Text>Chores</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity 
+                    onPress={() => {navigation.navigate("ViewRewardChild", { firestore, accId, docid:docid });
+                    }}>
                     <Text>Reward Store</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text>Reward History</Text>
                 </TouchableOpacity>
                 <TouchableOpacity>
                     <Text>Inbox</Text>
@@ -33,6 +28,6 @@ export default function NavBar(){
                     <Text>Manage Account</Text>
                 </TouchableOpacity>
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }

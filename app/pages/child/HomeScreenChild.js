@@ -69,17 +69,12 @@ export default function HomeScreenChild({ navigation, route }) {
         setRefresh(false);
     }
     return (
-        <SafeAreaView>
-            <NavBar />
-            <Button
-                onPress={() => {
-
-                    navigation.navigate("ViewRewardChild", { firestore, accId, docid:docid });
-
-                }}
-                title="ViewRewardChild"
-                color="#841584"
-            />
+        <SafeAreaView style={{padding:'10%'}}>
+            <View style={{flexDirection: 'row'}}>
+                <Text style={{fontSize: 18}}>Welcome, </Text>
+                <Image source = {require('../../../assets/childprofile.jpeg')} style = {{width:100, height:100, alignSelf: 'flex-end'}}/>
+            </View>
+            <NavBar navigation={navigation} route={route} />
             <FlatList
                 keyExtractor={(item) => item.id}
                 data={DATA}
