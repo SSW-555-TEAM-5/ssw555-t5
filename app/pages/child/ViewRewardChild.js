@@ -55,7 +55,7 @@ export default function ViewRewardChild({ navigation, route }) {
 
     <SafeAreaView>
 
-      <Text style={{fontSize: 30, textAlign:'center', color: "#2ABAFF"}}>Acitve Rewards</Text>
+      <Text style={{fontSize: 30, textAlign:'center', color: "#2ABAFF"}}>Active Rewards</Text>
       <Text style= {{fontStyle:"italic", textAlign:'center', fontSize: 20, color:'gray', paddingBottom:15}}>Total Points: {points}</Text>
 
       <FlatList
@@ -87,6 +87,7 @@ export default function ViewRewardChild({ navigation, route }) {
                 </Card.Content>
               </Card>
 
+            <View style={{borderWidth:2, backgroundColor: "#2ABAFF", borderRadius:30, padding:'1%', borderColor:"#2ABAFF", marginHorizontal:'30%'}}>
               <Button
                 onPress={async () => {
                   const pro = doc(firestore, "seed", accId, "Profiles", docid);
@@ -101,8 +102,10 @@ export default function ViewRewardChild({ navigation, route }) {
 
                 }}
                 title="claim"
-                color="#841584"
+                color="white"
+                
               />
+            </View>
             </TouchableOpacity>
           </ScrollView>
         )}

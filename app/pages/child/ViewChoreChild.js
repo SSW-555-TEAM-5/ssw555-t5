@@ -17,6 +17,7 @@ export default function ViewChoreChild({ navigation, route }) {
   const [choreName, setChoreName] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [image, setImage] = useState("");
   const [status, setStatus] = useState("");
   const [refeshing, setRefresh] = useState(false);
   const [titleText, setTitleText] = useState("Select image to submit");
@@ -40,6 +41,7 @@ export default function ViewChoreChild({ navigation, route }) {
       setChoreName(chore["chore"]);
       setReward(chore["reward"]);
       setNotes(chore["note"]);
+      setImage(chore["image"]);
       time = querySnapshot.data()["dueDate"];
       time = moment.unix(time.seconds).utc().local();
       setDate(time);
@@ -68,9 +70,15 @@ export default function ViewChoreChild({ navigation, route }) {
     }
   }
 
-
-
-
+  const styles2 = StyleSheet.create({
+    container: {
+      justifyContent: "center",
+      alignItems: "center",
+      textAlign: "center",
+      backgroundColor: "white",
+      height: "100%"
+    }
+  });
   const start = async () => {
     await getChoreInfo(accId, choreId)
   }
@@ -79,35 +87,32 @@ export default function ViewChoreChild({ navigation, route }) {
   }, []);
 
   return (
-    <View>
-      <ScrollView contentContainerStyle={styles.contentContainer}>
+    <View style={styles2.container}>
+      <ScrollView>
         <View style={{ alignItems: "center", padding: 15 }}>
-          <Text style={styles.whiteTextBold}>{choreName}</Text>
 
-          <Text style={styles.whiteTextReg}>{date.format('hh:mm A')} </Text>
+          <Image style={{width: 400, height: 500, borderRadius:'40%'}} source={{uri:`${image}`}}/>
 
-
-
-
+          <Text style={[styles.infoTextTitle, {fontSize: 45}]}>{choreName}</Text>
+          <Text style={[styles.infoText, {fontSize:30}]}> Reward: {rewardPoint} </Text>
 
           <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-            <Text style={styles.white_smallTextReg}> {date.format('M/DD/YYYY')} </Text>
+            <Text style={[styles.infoText, {fontSize:25}]}> {date.format('M/DD/YYYY')} </Text>
+            <Text style={[styles.infoText, {fontSize:25}]}>  |  </Text>
+            <Text style={[styles.infoText, {fontSize:25}]}> {date.format('hh:mm A')} </Text>
           </View>
-          <Text style={styles.whiteTextReg}> Reward: {rewardPoint} </Text>
+          
         </View>
-
-
-        <View style={styles.locationBox}>
-          <View style={{ flexDirection: "column", padding: 10, flex: .5 }}>
-            <Text style={styles.black_smallTextBold}>Notes:</Text>
-            <Text> {notes} </Text>
+        
+        <View style={[styles.locationBox, {marginLeft:"10%"}]}>
+          <View style={{padding:'3%'}}>
+            <Text style={[styles.black_smallTextBold, {color:"#2ABAFF"}]}>Notes: </Text>
+            <Text style={[styles.infoText, {fontSize:25}]}> {notes} wefhouef</Text>
           </View>
         </View>
 
         <Button
           onPress={async () => {
-
-
             const ref = doc(firestore, "seed", accId, "chores", choreId);
             const q = await getDoc(ref);
             const querySnapshot = q.data();
@@ -117,10 +122,7 @@ export default function ViewChoreChild({ navigation, route }) {
             }else{
               setDisabled(false);
             }
-            
             toggleOverlay()
-
-
           }}
           title="request to complete"
           color="#841584"
@@ -133,7 +135,6 @@ export default function ViewChoreChild({ navigation, route }) {
         />
 
         <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-
           <Text style={styles.titleText}>{titleText}</Text>
           <Button
             onPress={async () => {
@@ -145,7 +146,6 @@ export default function ViewChoreChild({ navigation, route }) {
             color="#841584"
             disabled = {disabled}
           />
-
         </Overlay>
 
       </ScrollView>

@@ -32,7 +32,8 @@ export default StyleSheet.create({
     },
     contentContainer: {
         alignItems:'center',
-        padding:25
+        padding:25,
+        backgroundColor: "white",
       },
       hostedByText:{
         color: 'black',
@@ -93,8 +94,7 @@ export default StyleSheet.create({
       },
       locationBox:{
         flexDirection: "row", 
-        alignItems: "center",
-        justifyContent: "space-evenly",
+        alignItems: "left",
         backgroundColor: "white",
         borderWidth: 2,
         width:"80%",
