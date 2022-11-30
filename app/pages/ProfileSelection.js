@@ -3,8 +3,9 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { getFirestore, doc, addDoc, collection, query, where, getDocs, getDoc, Timestamp } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
-import { FlatList, View, Text, StyleSheet, Image, SafeAreaView, TextInput, TouchableOpacity, ScrollView, Button, Modal } from "react-native";
-import { Overlay } from 'react-native-elements';
+import { FlatList, View, Text, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, ScrollView, Button, Modal } from "react-native";
+import { Overlay, Image} from 'react-native-elements';
+import { Card } from 'react-native-paper';
 import { pickImage } from '../../upload-image';
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -142,20 +143,28 @@ export default function ProfileSelection({ navigation, route }) {
     return (
         <SafeAreaView>
             <FlatList
+                
                 keyExtractor={(item) => item.id}
                 data={DATA}
                 refreshing={refeshing}
                 onRefresh={handleRefresh}
+                // numColumns= {3}
                 renderItem={({ item }) => (
                     <ScrollView style={{ width: '100%', padding: 10 }}>
 
-                        <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap', width: "80%", height: '95%', borderWidth: .5, borderRadius: 8 }} onPress={async () => { guardStatus(item.name) }}>
-                            <View style={{ flex: .5 }}>
+                        {/* <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap', width: "80%", height: '95%', borderWidth: .5, borderRadius: 8 }} onPress={async () => { guardStatus(item.name) }}> */}
+                        <TouchableOpacity onPress={async () => { guardStatus(item.name) }}>
+                            <Card>
+                                <Card.Cover source={{ uri: item.imageURL }}/>
+                                {/* <Card.Image source={item.imageURL}/> */}
+                                <Card.Title title={item.name} />
+                            </Card>
+                            {/* <View style={{ flex: .5 }}>
                                 <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
                             </View>
                             <View style={{ flexDirection: 'column', padding: 10 }}>
                                 <Text style={styles.infoTextTitle}>{item.name}</Text>
-                            </View>
+                            </View> */}
                         </TouchableOpacity>
 
                     </ScrollView>
