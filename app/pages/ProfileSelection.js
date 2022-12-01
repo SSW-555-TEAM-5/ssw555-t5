@@ -30,7 +30,7 @@ export default function ProfileSelection({ navigation, route }) {
     const [accidState, setAccidState] = useState(accId);
     const [pin, setPin] = useState("");
     const [newPName, setNewPName] = useState("");
-    const [avatarURL, setAvatarURL] = useState("");
+    const [avatarURL, setAvatarURL] = useState("https://firebasestorage.googleapis.com/v0/b/ssw555-t5-7f6c3.appspot.com/o/avatars%2FChoreNScore.png?alt=media&token=d122ce9b-195d-496e-87d5-f2242012328d");
 
     const [visible, setVisible] = useState(false);
     //Data format = {id: element,id2:element2}
@@ -202,7 +202,9 @@ export default function ProfileSelection({ navigation, route }) {
                         <Button
                             onPress={async () => {
                                 let image = await pickImage(accidState+'/avatars');
-                                setAvatarURL(image);
+                                if (image != ""){
+                                    setAvatarURL(image);
+                                }
                             }}
                             title="Upload Profile Picture"
                             color="#2ABAFF"
