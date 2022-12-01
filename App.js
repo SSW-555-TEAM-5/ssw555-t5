@@ -21,6 +21,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+
         <Stack.Screen name="StartUpScreen" component={StartUpScreen} options={{
           headerShown: false,
           headerTransparent: true,
@@ -50,6 +51,7 @@ export default function App() {
           title: '',
 
         }} />
+
 
 
         <Stack.Screen name="ProfileSelection" component={ProfileSelection} options={{

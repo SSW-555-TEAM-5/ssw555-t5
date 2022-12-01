@@ -20,7 +20,6 @@ export default function CreateChores({ navigation, route }) {
     const [rewardPoint, setReward] = useState(0);
     const [imageURL, setImageURL] = useState("");
 
-
     const hostChore = async (choreName, rewardPoint, dDate, notes, imageURL) => {
 
         try {

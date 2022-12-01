@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, View, Text, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, ScrollView, Button, Modal } from "react-native";
 import { Overlay, Image} from 'react-native-elements';
 import { Card } from 'react-native-paper';
+
 import { pickImage } from '../../upload-image';
 // Your web app's Firebase configuration
 const firebaseConfig = {
