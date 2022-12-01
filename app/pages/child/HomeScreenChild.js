@@ -45,18 +45,35 @@ export default function HomeScreenChild({ navigation, route }) {
         setRefresh(false);
     }
     return (
-        <View style={{ backgroundColor: "white", flex: 1 }}>
+        <View style={{ backgroundColor: "white", flex: 1, paddingHorizontal:'5%' }}>
             <SafeAreaView style={{ padding: '10%', backgroundColor: "white" }}>
+            <View style = {{flexDirection: 'row'}}>
+                <Button 
+                        onPress={async () => {
+                            navigation.navigate("ProfileSelection", { accId: result })
+                        }}
+                        title="Switch Account"
+                        color="#2ABAFF"
+                    />
+                <Button
+                        onPress={async () => {
+                            await handleRefresh();
+                        }}
+                        title="                                        ↺       "
+                        color="#2ABAFF"
+                    />
+            </View>
+                <View style = {{paddingVertical: '2%'}}>
+                <View style={{flexDirection:'row', alignSelf:'center'}}>
+                    <Text style = {{color:'black', fontSize:50}}>Chore</Text>
+                    <Text style = {{textAlign: "center", color: "#2ABAFF",fontSize: "50"}}>N</Text>
+                    <Text style = {{color:'black', fontSize:50}}>Score</Text>
+                </View>
                 <Text style={{ fontSize: 30, textAlign: 'center', color: "#2ABAFF" }}> Welcome! </Text>
                 <Text style={{ fontStyle: "italic", textAlign: 'center', fontSize: 20, color: 'gray' }}>Time to do chores!</Text>
                 <NavBar navigation={navigation} route={route} />
-                <Button
-                    onPress={async () => {
-                        await handleRefresh();
-                    }}
-                    title="refresh"
-                    color="#2ABAFF"
-                />
+                </View>
+                <View style={{borderWidth:'1%', borderColor:"#2ABAFF", padding:'1%', borderRadius:10}}>
                 <FlatList
                     keyExtractor={(item) => item.id}
                     data={DATA}
@@ -78,6 +95,7 @@ export default function HomeScreenChild({ navigation, route }) {
                         </View>
                     )}
                 />
+                </View>
 
 
             </SafeAreaView>

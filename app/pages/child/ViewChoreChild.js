@@ -88,7 +88,7 @@ export default function ViewChoreChild({ navigation, route }) {
 
   return (
     <View style={styles2.container}>
-      <ScrollView>
+      <View>
         <View style={{ alignItems: "center", padding: 15 }}>
 
           <Image style={{width: 400, height: 500, borderRadius:'40%'}} source={{uri:`${image}`}}/>
@@ -104,11 +104,9 @@ export default function ViewChoreChild({ navigation, route }) {
           
         </View>
         
-        <View style={[styles.locationBox, {marginLeft:"10%"}]}>
-          <View style={{padding:'3%'}}>
+        <View style={{width:'100%', alignContent:'center',borderWidth:'.5%', borderColor:"#2ABAFF", padding:'3%', alignSelf:'center'}}>
             <Text style={[styles.black_smallTextBold, {color:"#2ABAFF"}]}>Notes: </Text>
             <Text style={[styles.infoText, {fontSize:25}]}> {notes} wefhouef</Text>
-          </View>
         </View>
 
         <Button
@@ -148,7 +146,7 @@ export default function ViewChoreChild({ navigation, route }) {
           />
         </Overlay>
 
-      </ScrollView>
+      </View>
     </View>
   );
 }
