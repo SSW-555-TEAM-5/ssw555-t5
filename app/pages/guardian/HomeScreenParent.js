@@ -49,19 +49,24 @@ export default function HomeScreenParent({ navigation, route }) {
     }, []);
 
     const handleRefresh = async () => {
-        enterSearch("")
         await start();
         setRefresh(false);
     }
 
     return (
-        <View style={{backgroundColor: "white", flex:1}}>
+        <View style={{ backgroundColor: "white", flex: 1 }}>
             <SafeAreaView>
-                <Text style={{fontSize: 30, textAlign:'center', color: "#2ABAFF"}}> Welcome,  Guardian! </Text>
-                    <Text style= {{fontStyle:"italic", textAlign:'center', fontSize: 20, color:'gray'}}>Time to assign chores!</Text>
+                <Text style={{ fontSize: 30, textAlign: 'center', color: "#2ABAFF" }}> Welcome,  Guardian! </Text>
+                <Text style={{ fontStyle: "italic", textAlign: 'center', fontSize: 20, color: 'gray' }}>Time to assign chores!</Text>
 
                 <NavBar navigation={navigation} route={route} />
-
+                <Button
+                    onPress={async () => {
+                        await handleRefresh();
+                    }}
+                    title="refresh"
+                    color="#2ABAFF"
+                />
                 <FlatList
                     keyExtractor={(item) => item.id}
                     data={DATA}
@@ -76,13 +81,13 @@ export default function HomeScreenParent({ navigation, route }) {
                                     <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
                                 </View>
                                 <View style={{ flexDirection: 'column', padding: 10 }}> */}
-                                    {/* chore card */}
-                                    {/* <Text style={styles.infoTextTitle}>{item.name}</Text>
+                                {/* chore card */}
+                                {/* <Text style={styles.infoTextTitle}>{item.name}</Text>
                                     <Text style={styles.infoTextTitle}>{item.finished}</Text>
                                     <Text style={styles.infoText}>Due Date: {item.dueDate}</Text>
                                 </View> */}
                                 <Card>
-                                    <Card.Cover source={{ uri: item.imageURL }}/>
+                                    <Card.Cover source={{ uri: item.imageURL }} />
                                     <Card.Title title={item.name} titleStyle={styles.infoTextTitle} />
                                     <Card.Content>
                                         <Paragraph styles={styles.infoText}>{item.finished}</Paragraph>
