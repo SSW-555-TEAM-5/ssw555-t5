@@ -2,7 +2,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreenChild from './app/pages/child/HomeScreenChild';
 import HomeScreenParent from './app/pages/guardian/HomeScreenParent';
-import CreateReward from './app/pages/child/CreateReward'
+import CreateReward from './app/pages/guardian/CreateReward'
 import CreateChores from './app/pages/guardian/CreateChores';
 import ViewRewardChild from './app/pages/child/ViewRewardChild';
 import ViewChoreParent from './app/pages/guardian/ViewChoreParent';
@@ -21,22 +21,16 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="ProfileSelection" component={ProfileSelection} options={{
-          headerShown: false,
-          headerTransparent: true,
-          headerTintColor: 'white',
-          headerShadowVisible: false,
-          headerBackVisible: true,
-          title: '',
 
-        }} />
         <Stack.Screen name="StartUpScreen" component={StartUpScreen} options={{
           headerShown: false,
+          headerTransparent: true,
           headerTintColor: '#133C55',
           headerShadowVisible: false,
           headerShown: true,
           title: '',
         }} />
+
 
         <Stack.Screen name="Login" component={Login} options={{
           headerStyle: { backgroundColor: 'transparent' },
@@ -58,7 +52,17 @@ export default function App() {
 
         }} />
 
-        
+
+
+        <Stack.Screen name="ProfileSelection" component={ProfileSelection} options={{
+          headerShown: false,
+          headerTransparent: true,
+          headerTintColor: 'white',
+          headerShadowVisible: false,
+          headerBackVisible: true,
+          title: 'Family',
+
+        }} />
 
 
 
@@ -67,15 +71,16 @@ export default function App() {
 
         <Stack.Screen name="HomeScreenChild" component={HomeScreenChild} options={{
           headerShown: false,
-          headerTintColor: '#133C55',
+          headerTintColor: "#2ABAFF",
           headerShadowVisible: false,
-          headerShown: true,
-          title: '',
+          headerShown: false,
+          title: 'ChoreNScore',
+          headerBackVisible: false,
         }} />
         <Stack.Screen name="ViewChoreChild" component={ViewChoreChild} options={{
           headerStyle: { backgroundColor: 'transparent' },
           headerTransparent: true,
-          headerTintColor: 'white',
+          headerTintColor: "#2ABAFF",
           headerShadowVisible: false,
           headerBackVisible: true,
           title: '',
@@ -83,23 +88,24 @@ export default function App() {
         }} />
         <Stack.Screen name="HomeScreenParent" component={HomeScreenParent} options={{
           headerShown: false,
-          headerTintColor: '#133C55',
+          headerTintColor: "#2ABAFF",
           headerShadowVisible: false,
           headerShown: true,
           title: '',
+          headerBackVisible: false,
         }} />
 
 
-        <Stack.Screen name="CreateChore" component={CreateChores} options={{
+        <Stack.Screen name="CreateChores" component={CreateChores} options={{
           headerStyle: { backgroundColor: 'white' },
-          headerTintColor: '#133C55',
+          headerTintColor: "#2ABAFF",
           headerShadowVisible: false,
           headerBackVisible: true,
           title: ''
         }} />
         <Stack.Screen name="CreateReward" component={CreateReward} options={{
           headerStyle: { backgroundColor: 'white' },
-          headerTintColor: '#133C55',
+          headerTintColor: "#2ABAFF",
           headerShadowVisible: false,
           headerBackVisible: true,
           title: ''
@@ -108,7 +114,7 @@ export default function App() {
         <Stack.Screen name="ViewChoreParent" component={ViewChoreParent} options={{
           headerStyle: { backgroundColor: 'transparent' },
           headerTransparent: true,
-          headerTintColor: 'white',
+          headerTintColor: "#2ABAFF",
           headerShadowVisible: false,
           headerBackVisible: true,
           title: '',
@@ -117,7 +123,7 @@ export default function App() {
         <Stack.Screen name="ViewRewardChild" component={ViewRewardChild} options={{
           headerStyle: { backgroundColor: 'transparent' },
           headerTransparent: true,
-          headerTintColor: 'white',
+          headerTintColor: "#2ABAFF",
           headerShadowVisible: false,
           headerBackVisible: true,
           title: '',
@@ -126,7 +132,7 @@ export default function App() {
         <Stack.Screen name="ViewRewardParent" component={ViewRewardParent} options={{
           headerStyle: { backgroundColor: 'transparent' },
           headerTransparent: true,
-          headerTintColor: 'white',
+          headerTintColor: "#2ABAFF",
           headerShadowVisible: false,
           headerBackVisible: true,
           title: '',

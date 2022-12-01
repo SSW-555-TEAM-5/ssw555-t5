@@ -15,14 +15,15 @@ export default StyleSheet.create({
         borderBottomLeftRadius: 8
     },
     infoTextTitle:{
-        fontSize:14,
+        fontSize:25,
         textAlign: 'left',
         fontWeight: 'bold',
+        color: "#2ABAFF"
     },
     infoText: {
         color: 'gray',
         textAlign: 'left',
-        fontSize: 12,
+        fontSize: 20
     },
     linkText:{
         textAlign:'left',
@@ -31,7 +32,8 @@ export default StyleSheet.create({
     },
     contentContainer: {
         alignItems:'center',
-        padding:25
+        padding:25,
+        backgroundColor: "white",
       },
       hostedByText:{
         color: 'black',
@@ -92,13 +94,39 @@ export default StyleSheet.create({
       },
       locationBox:{
         flexDirection: "row", 
-        alignItems: "center",
-        justifyContent: "space-evenly",
+        alignItems: "left",
         backgroundColor: "white",
         borderWidth: 2,
         width:"80%",
         borderRadius:15
-      }
+      },
+      container: {
+        backgroundColor: 'white',
+        alignSelf: 'center',
+        borderRadius: '15%',
+        width: '85%',
+        height: "85%",
+        justifyContent: 'space-evenly',
+        padding:'10%',
+    },
+    textHeader:{
+        fontSize:22,
+        color: 'black',
+        paddingBottom:'2%'
+        
+    },
+    textInput: {
+        borderColor: 'gray',
+        borderWidth:'1%',
+        width: '100%',
+        borderRadius:'4%',
+        padding:'2%',
+       
+    },
+    textComponent: {
+        //paddingBottom: '5%',
+        padding:'2%'
+    }
     
 
 });

@@ -1,7 +1,7 @@
 
 
 import React, { useState } from 'react';
-import { StyleSheet, View, Dimensions, ImageBackground, Alert, Modal, Text, Button, TextInput,SafeAreaView } from 'react-native';
+import { StyleSheet, View, Dimensions, ImageBackground, Alert, Modal, Text, TouchableOpacity, TextInput, SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { signUpWithEmail } from '../../firebase';
 import { pickImage } from '../../upload-image';
@@ -11,116 +11,149 @@ export default function SignUp({ navigation }) {
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
     const [email, setEmail] = useState("");
-    const [avatarURL, setAvatarURL] = useState("");
     const [password, setPassword] = useState("");
     const [guardianName, setGuardianName] = useState("");
     const [guardianPin, setGuardianPin] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
-    const [accidState, setAccidState] = useState(accId);
+    const [avatarURL, setAvatarURL] = useState("https://firebasestorage.googleapis.com/v0/b/ssw555-t5-7f6c3.appspot.com/o/avatars%2FChoreNScore.png?alt=media&token=d122ce9b-195d-496e-87d5-f2242012328d");
     return (
-        <SafeAreaView style={styles.container}>
+        <>
             {/* sign up error modal */}
             <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { Alert.alert("Modal has been closed."); setModalVisible(!modalVisible); }}>
                 <View >
                     <Text>Account Not Created</Text>
                     <Text>Invalid Submission(s)</Text>
-                    <Button
+                    <TouchableOpacity
                         onPress={() => setModalVisible(!modalVisible)}
-                        title="try again"
-                        color="#841584"
-                    />
+                        style={{ backgroundColor: '#2ABAFF', width: '35%', alignSelf: 'center', padding: '2%', borderRadius: '4%' }}
+                    >
+                        <Text style={{ color: 'white' }}>Sign Up Error</Text>
+
+                    </TouchableOpacity>
+
                 </View>
             </Modal>
-            <StatusBar style="light" />
 
-            <View>
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+                <View style={styles.container}>
+                    <Text style={[styles.textHeader, { alignSelf: 'center' }]}>Account Holder</Text>
+                    <Text style={{ alignSelf: 'center' }}>___________________________________</Text>
+                    <View>
+                        <Text style={styles.textHeader}>First Name</Text>
+                        <View style={styles.textInput}>
+                            <TextInput
+                                onChangeText={setFName}
+                                placeholder={"George"}
+                            />
+                        </View>
+                    </View>
+                    <View>
+                        <Text style={styles.textHeader}>Last Name</Text>
+                        <View style={styles.textInput}>
+                            <TextInput
+                                onChangeText={setLName}
+                                placeholder={"McGregor"}
+                            />
+                        </View>
+                    </View>
+                    <View>
 
-                <Text>First Name</Text>
-                <TextInput
-                    onChangeText={setFName}
-                    placeholder={"George"}
-                />
+                        <Text style={styles.textHeader}>Email</Text>
+                        <View style={styles.textInput}>
+                            <TextInput
+                                onChangeText={setEmail}
+                                placeholder={"abc123@gmail.com"}
+                            />
+                        </View>
+                    </View>
+                    <View>
+                        <Text style={styles.textHeader}>Password</Text>
+                        <View style={styles.textInput}>
+                            <TextInput
+                                onChangeText={setPassword}
+                                placeholder={"Password"}
+                            />
+                        </View>
+                    </View>
+                    <View>
+                        <Text style={styles.textHeader}>Group Name</Text>
+                        <View style={styles.textInput}>
+                            <TextInput
+                                onChangeText={setGuardianName}
+                                placeholder={"McGregor Family"}
+                            />
+                        </View>
+                    </View>
+                    <View>
+                        <Text style={styles.textHeader}>Guardian Pin</Text>
+                        <View style={styles.textInput}>
+                            <TextInput
+                                onChangeText={setGuardianPin}
+                                placeholder={"1234"}
+                            />
+                        </View>
+
+                        <Button
+                            onPress={async () => {
+                                let image = await pickImage(accidState + '/avatars');
+                                if (image != ""){
+                                    setAvatarURL(image);
+                                }
+                                
+                            }}
+                            title="Switch Account"
+                            color="#2ABAFF"
+                        />
+                    </View>
 
 
-                <Text>Last Name</Text>
-                <TextInput
-                    onChangeText={setLName}
-                    placeholder={"Washington"}
-
-                />
-                <Text>____________________________</Text>
-
-                <Text>Email</Text>
-                <TextInput
-                    onChangeText={setEmail}
-                    placeholder={"abc123@gmail.com"}
-
-                />
-
-                <Text>Password</Text>
-                <TextInput
-                    onChangeText={setPassword}
-                    placeholder={"Password"}
-
-                />
-
-                <Text>Guardian profile name</Text>
-                <TextInput
-                    onChangeText={setGuardianName}
-                    placeholder={"guardian"}
-
-                />
-
-
-                <Text>Guardian Pin Password</Text>
-                <TextInput
-                    onChangeText={setGuardianPin}
-                    placeholder={"1234"}
-
-                />
-                
-                    <Button
+                    <TouchableOpacity
                         onPress={async () => {
-                            let image = await pickImage(accidState+'/avatars');
-                            setAvatarURL(image);
-                        }}
-                        title="Upload Profile Picture"
-                        color="#841584"
-                    />
+                            let result = await signUpWithEmail(fName, lName, email, password, avatarURL, guardianName, guardianPin);
+                            //if signing up is successful, send to profile selection screen with seed account ID
+                            if (result != null) {
+                                navigation.navigate("ProfileSelection", { accId: result });
+                            }
+                            else {
+                                setModalVisible(true);
+                            }
+                        }} style={{ backgroundColor: '#2ABAFF', width: '50%', alignSelf: 'center', padding: '2%', borderRadius: '4%' }}>
+                        <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>Sign Up</Text>
 
-                <Button
-                    onPress={async () => {
-                        let result = await signUpWithEmail(fName, lName, email, password, avatarURL, guardianName, guardianPin);
-                        //if signing up is successful, send to profile selection screen with seed account ID
-                        if (result != null) {
-                            navigation.navigate("ProfileSelection", { accId: result });
-                        }
-                        else {
-                            setModalVisible(true);
-                        }
-                    }}
-                    title="Sign Up"
-                    color="#841584"
-                />
-
-               
-
+                    </TouchableOpacity>
+                </View>
             </View>
+        </>
 
-        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center',
-        //justifyContent: 'center',
         backgroundColor: 'white',
         alignSelf: 'center',
-        position: 'absolute',
-        borderRadius: 20,
-        width: 338,
-        height: 577,
-        justifyContent: 'space-around',
+        borderRadius: '15%',
+        width: '85%',
+        height: "85%",
+        justifyContent: 'space-evenly',
+        padding: '10%',
     },
+    textHeader: {
+        fontSize: 22,
+        color: 'black',
+        paddingBottom: '2%'
+
+    },
+    textInput: {
+        borderColor: 'gray',
+        borderWidth: '1%',
+        width: '100%',
+        borderRadius: '4%',
+        padding: '2%',
+
+    },
+    textComponent: {
+        //paddingBottom: '5%',
+        padding: '2%'
+    }
 });

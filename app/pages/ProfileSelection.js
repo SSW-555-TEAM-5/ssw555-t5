@@ -3,9 +3,10 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { getFirestore, doc, addDoc, collection, query, where, getDocs, getDoc, Timestamp } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
-import { FlatList, View, Text, StyleSheet, Image, SafeAreaView, TextInput, TouchableOpacity, ScrollView, Button, Modal } from "react-native";
-import { Overlay } from 'react-native-elements';
-import NavBar from '../components/header';
+import { FlatList, View, Text, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, ScrollView, Button, Modal } from "react-native";
+import { Overlay, Image} from 'react-native-elements';
+import { Card } from 'react-native-paper';
+
 import { pickImage } from '../../upload-image';
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -23,14 +24,14 @@ const auth = getAuth(app);
 const firestore = getFirestore(app);
 
 export default function ProfileSelection({ navigation, route }) {
-    // const { accId } = route.params;
-    let accId = "3vv3AoFj0XPiO8edCQq8";
+    const { accId } = route.params;
+    //let accId = "3vv3AoFj0XPiO8edCQq8";
 
     
     const [accidState, setAccidState] = useState(accId);
     const [pin, setPin] = useState("");
     const [newPName, setNewPName] = useState("");
-    const [avatarURL, setAvatarURL] = useState("");
+    const [avatarURL, setAvatarURL] = useState("https://firebasestorage.googleapis.com/v0/b/ssw555-t5-7f6c3.appspot.com/o/avatars%2FChoreNScore.png?alt=media&token=d122ce9b-195d-496e-87d5-f2242012328d");
 
     const [visible, setVisible] = useState(false);
     //Data format = {id: element,id2:element2}
@@ -84,7 +85,7 @@ export default function ProfileSelection({ navigation, route }) {
             let docData = doc.data();
             //if guardian profile is not selected, child homescreen is shown with corresponding profile
             if (docData["status"] == false) {
-                navigation.navigate("HomeScreenChild", { accId, docid: doc.id, firestore })
+                navigation.navigate("HomeScreenChild", { accId, docid: doc.id ,firestore })
             }
             else {
                 setVisible(true);
@@ -141,75 +142,83 @@ export default function ProfileSelection({ navigation, route }) {
         setRefresh(false);
     }
     return (
-        <SafeAreaView>
-            <FlatList
-                keyExtractor={(item) => item.id}
-                data={DATA}
-                refreshing={refeshing}
-                onRefresh={handleRefresh}
-                renderItem={({ item }) => (
-                    <ScrollView style={{ width: '100%', padding: 10 }}>
+        // <View style={{backgroundColor: "white", flex:1}}>
+            <SafeAreaView style={{backgroundColor: "white", flex:1}}>
+                <View style = {{paddingVertical:'15%'}}>
+                {/* <View style={{paddingBottom:"5%"}}> */}
+                    <Text style={{fontSize: 30, textAlign:'center', color: "#2ABAFF"}}>Family</Text>
+                {/* </View> */}
+                
+                <FlatList
+                    
+                    keyExtractor={(item) => item.id}
+                    data={DATA}
+                    refreshing={refeshing}
+                    onRefresh={handleRefresh}
+                    // numColumns= {3}
+                    renderItem={({ item }) => (
+                        <View style={{ width: '100%', padding: 10 }}>
+                            <TouchableOpacity onPress={async () => { guardStatus(item.name) }}>
+                                <Card>
+                                    <Card.Cover source={{ uri: item.imageURL }}/>
+                                    <Card.Title title={item.name} />
+                                </Card>
+                            </TouchableOpacity>
 
-                        <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap', width: "80%", height: '95%', borderWidth: .5, borderRadius: 8 }} onPress={async () => { guardStatus(item.name) }}>
-                            <View style={{ flex: .5 }}>
-                                <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
-                            </View>
-                            <View style={{ flexDirection: 'column', padding: 10 }}>
-                                <Text style={styles.infoTextTitle}>{item.name}</Text>
-                            </View>
-                        </TouchableOpacity>
-
-                    </ScrollView>
-                )}
-            />
-
-            <Button
-                onPress={async () => { setModalVisible(true) }}
-                title="add new profile"
-                color="#841584"
-            />
-
-            <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-
-                <Text>Enter Pin</Text>
-                <TextInput
-                    onChangeText={setPin}
-                    placeholder={"0000"}
-
+                        </View>
+                    )}
                 />
+
                 <Button
-                    onPress={async () => { guardianVerify() }}
-                    title="Enter"
-                    color="#841584"
+                    onPress={async () => { setModalVisible(true) }}
+                    title="add new profile"
+                    color="#2ABAFF"
                 />
-
-            </Overlay>
-
-            <Overlay isVisible={modalVisible} onBackdropPress={toggleOverlay2}>
-                <View >
-                    <Text>Enter profile name</Text>
-                    <TextInput
-                        onChangeText={setNewPName}
-                        placeholder={"Bob"}
-                    />
-
-
-                    <Button
-                        onPress={async () => {
-                            let image = await pickImage(accidState+'/avatars');
-                            setAvatarURL(image);
-                        }}
-                        title="Upload Profile Picture"
-                        color="#841584"
-                    />
-                    <Button
-                        onPress={async () => { addNewProfile() }}
-                        title="Add"
-                        color="#841584"
-                    />
                 </View>
-            </Overlay>
-        </SafeAreaView>
+                <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+
+                    <Text>Enter Pin</Text>
+                    <TextInput
+                        onChangeText={setPin}
+                        placeholder={"0000"}
+
+                    />
+                    <Button
+                        onPress={async () => { guardianVerify() }}
+                        title="Enter"
+                        color="#2ABAFF"
+                    />
+
+                </Overlay>
+
+                <Overlay isVisible={modalVisible} onBackdropPress={toggleOverlay2}>
+                    <View >
+                        <Text>Enter profile name</Text>
+                        <TextInput
+                            onChangeText={setNewPName}
+                            placeholder={"Bob"}
+                        />
+
+
+                        <Button
+                            onPress={async () => {
+                                let image = await pickImage(accidState+'/avatars');
+                                if (image != ""){
+                                    setAvatarURL(image);
+                                }
+                            }}
+                            title="Upload Profile Picture"
+                            color="#2ABAFF"
+                        />
+                        <Button
+                            onPress={async () => { addNewProfile() }}
+                            title="Add"
+                            color="#2ABAFF"
+                        />
+                    </View>
+                </Overlay>
+            </SafeAreaView>
+        // </View>
     );
 }
 
