@@ -99,7 +99,34 @@ export default StyleSheet.create({
         borderWidth: 2,
         width:"80%",
         borderRadius:15
-      }
+      },
+      container: {
+        backgroundColor: 'white',
+        alignSelf: 'center',
+        borderRadius: '15%',
+        width: '85%',
+        height: "85%",
+        justifyContent: 'space-evenly',
+        padding:'10%',
+    },
+    textHeader:{
+        fontSize:22,
+        color: 'black',
+        paddingBottom:'2%'
+        
+    },
+    textInput: {
+        borderColor: 'gray',
+        borderWidth:'1%',
+        width: '100%',
+        borderRadius:'4%',
+        padding:'2%',
+       
+    },
+    textComponent: {
+        //paddingBottom: '5%',
+        padding:'2%'
+    }
     
 
 });

@@ -141,75 +141,81 @@ export default function ProfileSelection({ navigation, route }) {
         setRefresh(false);
     }
     return (
-        <SafeAreaView>
-            <View style = {{paddingVertical:'15%'}}>
-            <FlatList
+        // <View style={{backgroundColor: "white", flex:1}}>
+            <SafeAreaView style={{backgroundColor: "white", flex:1}}>
+                <View style = {{paddingVertical:'15%'}}>
+                {/* <View style={{paddingBottom:"5%"}}> */}
+                    <Text style={{fontSize: 30, textAlign:'center', color: "#2ABAFF"}}>Family</Text>
+                {/* </View> */}
                 
-                keyExtractor={(item) => item.id}
-                data={DATA}
-                refreshing={refeshing}
-                onRefresh={handleRefresh}
-                // numColumns= {3}
-                renderItem={({ item }) => (
-                    <View style={{ width: '100%', padding: 10 }}>
-                        <TouchableOpacity onPress={async () => { guardStatus(item.name) }}>
-                            <Card>
-                                <Card.Cover source={{ uri: item.imageURL }}/>
-                                <Card.Title title={item.name} />
-                            </Card>
-                        </TouchableOpacity>
+                <FlatList
+                    
+                    keyExtractor={(item) => item.id}
+                    data={DATA}
+                    refreshing={refeshing}
+                    onRefresh={handleRefresh}
+                    // numColumns= {3}
+                    renderItem={({ item }) => (
+                        <View style={{ width: '100%', padding: 10 }}>
+                            <TouchableOpacity onPress={async () => { guardStatus(item.name) }}>
+                                <Card>
+                                    <Card.Cover source={{ uri: item.imageURL }}/>
+                                    <Card.Title title={item.name} />
+                                </Card>
+                            </TouchableOpacity>
 
-                    </View>
-                )}
-            />
-
-            <Button
-                onPress={async () => { setModalVisible(true) }}
-                title="add new profile"
-                color="#841584"
-            />
-            </View>
-            <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-
-                <Text>Enter Pin</Text>
-                <TextInput
-                    onChangeText={setPin}
-                    placeholder={"0000"}
-
+                        </View>
+                    )}
                 />
+
                 <Button
-                    onPress={async () => { guardianVerify() }}
-                    title="Enter"
-                    color="#841584"
+                    onPress={async () => { setModalVisible(true) }}
+                    title="add new profile"
+                    color="#2ABAFF"
                 />
-
-            </Overlay>
-
-            <Overlay isVisible={modalVisible} onBackdropPress={toggleOverlay2}>
-                <View >
-                    <Text>Enter profile name</Text>
-                    <TextInput
-                        onChangeText={setNewPName}
-                        placeholder={"Bob"}
-                    />
-
-
-                    <Button
-                        onPress={async () => {
-                            let image = await pickImage(accidState+'/avatars');
-                            setAvatarURL(image);
-                        }}
-                        title="Upload Profile Picture"
-                        color="#841584"
-                    />
-                    <Button
-                        onPress={async () => { addNewProfile() }}
-                        title="Add"
-                        color="#841584"
-                    />
                 </View>
-            </Overlay>
-        </SafeAreaView>
+                <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+
+                    <Text>Enter Pin</Text>
+                    <TextInput
+                        onChangeText={setPin}
+                        placeholder={"0000"}
+
+                    />
+                    <Button
+                        onPress={async () => { guardianVerify() }}
+                        title="Enter"
+                        color="#2ABAFF"
+                    />
+
+                </Overlay>
+
+                <Overlay isVisible={modalVisible} onBackdropPress={toggleOverlay2}>
+                    <View >
+                        <Text>Enter profile name</Text>
+                        <TextInput
+                            onChangeText={setNewPName}
+                            placeholder={"Bob"}
+                        />
+
+
+                        <Button
+                            onPress={async () => {
+                                let image = await pickImage(accidState+'/avatars');
+                                setAvatarURL(image);
+                            }}
+                            title="Upload Profile Picture"
+                            color="#2ABAFF"
+                        />
+                        <Button
+                            onPress={async () => { addNewProfile() }}
+                            title="Add"
+                            color="#2ABAFF"
+                        />
+                    </View>
+                </Overlay>
+            </SafeAreaView>
+        // </View>
     );
 }
 

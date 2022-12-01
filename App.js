@@ -58,7 +58,7 @@ export default function App() {
           headerTintColor: 'white',
           headerShadowVisible: false,
           headerBackVisible: true,
-          title: '',
+          title: 'Family',
 
         }} />
 

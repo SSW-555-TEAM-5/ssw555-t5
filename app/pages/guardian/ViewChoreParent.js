@@ -4,7 +4,7 @@ import { getFirestore, doc, addDoc, collection, query, where, getDocs, getDoc, T
 import moment from 'moment';
 import { Overlay } from 'react-native-elements';
 import styles from '../../components/colors';
-
+import { Paragraph, Card } from "react-native-paper";
 
 export default function ViewChoreParent({ navigation, route }) {
   const { accId, proId, choreId, firestore } = route.params;
@@ -120,78 +120,92 @@ export default function ViewChoreParent({ navigation, route }) {
     setRefresh(false);
   }
   return (
-    <SafeAreaView>
-      <View style={{ alignItems: "center", padding: 15 }}>
-        <Text style={styles.whiteTextBold}>{choreFinished}</Text>
-        <Text style={styles.whiteTextBold}>{choreName}</Text>
-
-        <Text style={styles.whiteTextReg}>{date.format('hh:mm A')} </Text>
-
-
-
-
-
-        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-          <Text style={styles.white_smallTextReg}> {date.format('M/DD/YYYY')} </Text>
-        </View>
-        <Text style={styles.whiteTextReg}> Reward: {rewardPoint} </Text>
-      </View>
-
-
-      <View >
-        <View style={{ flexDirection: "column", padding: 10, flex: .5 }}>
-          <Text style={styles.black_smallTextBold}>Notes:</Text>
-          <Text> {notes} </Text>
-        </View>
-      </View>
+    <View style={{backgroundColor: "white", flex:1}}>
       <SafeAreaView>
-        <FlatList
-          keyExtractor={(item) => item.id}
-          data={DATA}
-          refreshing={refeshing}
-          onRefresh={handleRefresh}
-          renderItem={({ item }) => (
+        <View style={{ alignItems: "center", padding: 15 }}>
+          <View style={{ alignItems: "center", padding: 15 }}>
+            <Text style={[styles.infoTextTitle, {fontSize: 45}]}>{choreName}</Text>
+            <Text style={[styles.infoText, {fontSize: 25}]}>{choreFinished}</Text>
+          </View>
 
-            <ScrollView style={{ width: '100%', padding: 10 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
+            <Text style={[styles.infoText, {fontSize:18}]}> {date.format('M/DD/YYYY')} </Text>
+            <Text style={[styles.infoText, {fontSize:18}]}>  |  </Text>
+            <Text style={[styles.infoText, {fontSize:18}]}> {date.format('hh:mm A')} </Text>
+          </View>
+
+          <View style={{ alignItems: "center", padding: 5 }}>
+          <Text style={[styles.infoText, {fontSize:18}]}> Reward: {rewardPoint} </Text>
+          </View>
+
+        </View>
+
+        {/* <View >
+          <View style={{ flexDirection: "column", padding: 10, flex: .5 }}>
+            <Text style={styles.black_smallTextBold}>Notes:</Text>
+            <Text> {notes} </Text>
+          </View>
+        </View> */}
+        <SafeAreaView>
+          <FlatList
+            keyExtractor={(item) => item.id}
+            data={DATA}
+            refreshing={refeshing}
+            onRefresh={handleRefresh}
+            renderItem={({ item }) => (
+
+              <ScrollView style={{ width: '100%', padding: 10 }}>
 
 
-              <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
+                {/* <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
 
 
-              <View style={{ flexDirection: 'column', padding: 10 }}>
-                <Text style={styles.infoTextTitle}>{item.name}</Text>
-                <Text style={styles.infoTextTitle}>{item.time}</Text>
-              </View>
-              <Button
-                onPress={async () => { confirmChore(item.id) }}
-                title="accept"
-                color="#841584"
-              />
-              <Button
-                onPress={async () => { declineChore(item.id) }}
-                title="decline"
-                color="#841584"
-              />
+                <View style={{ flexDirection: 'column', padding: 10 }}>
+                  <Text style={styles.infoTextTitle}>{item.name}</Text>
+                  <Text style={styles.infoTextTitle}>{item.time}</Text>
+                </View> */}
+                <Card>
+                    <Card.Cover source={{ uri: item.imageURL }}/>
+                    <Card.Title title={item.name} titleStyle={styles.infoTextTitle} />
+                    <Card.Content>
+                        <Paragraph style={styles.infoText}>Time: {item.time}</Paragraph>
+                    </Card.Content>
+                </Card>
+
+                <View style={{borderWidth:2, backgroundColor: "#2ABAFF", borderRadius:30, padding:'1%', borderColor:"#2ABAFF", marginHorizontal:'30%'}}>
+                  <Button
+                    onPress={async () => { confirmChore(item.id) }}
+                    title="accept"
+                    color="white"
+                  />
+                </View>
+
+                <View style={{borderWidth:2, backgroundColor: "#2ABAFF", borderRadius:30, padding:'1%', borderColor:"#2ABAFF", marginHorizontal:'30%'}}>
+                  <Button
+                    onPress={async () => { declineChore(item.id) }}
+                    title="decline"
+                    color="white"
+                  />
+                </View>
+
+              </ScrollView>
+            )}
+          />
+        </SafeAreaView>
 
 
-            </ScrollView>
-          )}
+
+
+
+        <Button
+          onPress={async () => { navigation.navigate("HomeScreenParent", { accId, choreId, firestore }) }}
+          title="Ok"
+          color="#841584"
         />
+
+
       </SafeAreaView>
-
-
-
-
-
-      <Button
-        onPress={async () => { navigation.navigate("HomeScreenParent", { accId, choreId, firestore }) }}
-        title="Ok"
-        color="#841584"
-      />
-
-
-    </SafeAreaView>
-
+    </View>
 
 
   );

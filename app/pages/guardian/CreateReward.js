@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Overlay } from 'react-native-elements';
 import { addDoc, collection } from 'firebase/firestore';
 import { pickImage } from '../../../upload-image';
-
+import styles from '../../components/colors';
 
 
 
@@ -45,69 +45,75 @@ export default function CreateReward({ navigation, route }) {
     };
 
     return (
-        <SafeAreaView style={styles.mainContainer}>
-            <ScrollView>
-                <Text>Reward Name</Text>
-                <TextInput
-                    onChangeText={setName}
-                    placeholder={"toy car"}
+        <View style={{backgroundColor: "white", flex:1}}>
+            <SafeAreaView style={styles.container}>
+                <ScrollView>
 
-                />
+                    <View style={{paddingBottom:"5%"}}>
+                        <Text style = {[styles.infoTextTitle,{alignSelf:'center', fontSize:35}]}>Create Reward</Text>
+                        <Text style={{alignSelf:'center'}}>___________________________________</Text>
+                    </View>
 
-                <Text>Rewards(Points)</Text>
-                <TextInput
-                    onChangeText={setReward}
-                    placeholder={"5"}
-                />
+                    <View style={{paddingBottom:"10%"}}>
+                        <Text style = {styles.textHeader}>Name</Text>
+                        <View style = {styles.textInput}>
+                            <TextInput
+                                onChangeText={setName}
+                                placeholder={"toy car"}
+
+                            />
+                        </View>
+                    </View>
+                    
+                    <View style={{paddingBottom:"10%"}}>
+                        <Text style = {styles.textHeader}>Points</Text>
+                        <View style = {styles.textInput}>
+                            <TextInput
+                                onChangeText={setReward}
+                                placeholder={"5"}
+                            />
+                        </View>
+                    </View>
+
+                    <View style={{paddingBottom:"10%"}}>
+                        <Text style = {styles.textHeader}>URL Reference</Text>
+                        <View style = {styles.textInput}>
+                            <TextInput
+                                onChangeText={setRef}
+                                placeholder={"www.amazon.com"}
+                            />
+                        </View>
+                    </View>
 
 
-                <Text>reference URL</Text>
-                <TextInput
-                    onChangeText={setRef}
-                    placeholder={"www.amazon.com"}
-                />
-
-
-                <Button
-                    onPress={async () => {
-                        let image = await pickImage(accId+'/rewards');
-                        setImageURL(image);
-                    }}
-                    title="Upload picture for Reward reference(optional)"
-                    color="#841584"
-                />
-
-                <Button
-                    onPress={async () => { hostEv() }}
-                    title="Create reward"
-                    color="#841584"
-                />
-                <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-
-                    <Text>Reward Created!</Text>
                     <Button
-                        onPress={async () => { navigation.goBack()}}
-                        title="Ok"
-                        color="#841584"
+                        onPress={async () => {
+                            let image = await pickImage(accId+'/rewards');
+                            setImageURL(image);
+                        }}
+                        title="Upload picture (optional)"
+                        color="#2ABAFF"
                     />
-                </Overlay>
+
+                    <Button
+                        onPress={async () => { hostEv() }}
+                        title="Create reward"
+                        color="#2ABAFF"
+                    />
+                    <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+
+                        <Text>Reward Created!</Text>
+                        <Button
+                            onPress={async () => { navigation.goBack()}}
+                            title="Ok"
+                            color="#2ABAFF"
+                        />
+                    </Overlay>
 
 
 
-            </ScrollView>
-        </SafeAreaView>
+                </ScrollView>
+            </SafeAreaView>
+        </View>
     );
 }
-const styles = StyleSheet.create({
-
-    mainContainer: {
-        flex: 1,
-        alignContent: 'center',
-        alignItems: "center",
-        padding: 10,
-        width: '100%',
-    },
-
-
-}
-);

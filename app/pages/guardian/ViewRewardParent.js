@@ -1,9 +1,10 @@
-import { SafeAreaView, View, Text, Image, StyleSheet, ImageBackground, FlatList, ScrollView, Button, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, Text, Image, StyleSheet, ImageBackground, FlatList, ScrollView, Button, TouchableOpacity, Linking} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { getFirestore, doc, addDoc, collection, query, where, getDocs, getDoc, Timestamp, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
 import moment from 'moment';
 import { Overlay } from 'react-native-elements';
 import styles from '../../components/colors';
+import { Paragraph, Card } from "react-native-paper";
 
 export default function ViewRewardParent({ navigation, route }) {
   const { firestore, accId } = route.params;
@@ -54,52 +55,68 @@ export default function ViewRewardParent({ navigation, route }) {
   }, []);
 
   return (
+    <View style={{backgroundColor: "white", flex:1}}>
+      <SafeAreaView>
+        <Text style={{fontSize: 30, textAlign:'center', color: "#2ABAFF"}}>Active Rewards</Text>
+        <Text style= {{fontStyle:"italic", textAlign:'center', fontSize: 20, color:'gray', paddingBottom:15}}>Goodies For The Kiddies</Text>
+        <FlatList
+          keyExtractor={(item) => item.id}
+          data={DATA}
+          refreshing={refeshing}
+          onRefresh={handleRefresh}
+          renderItem={({ item }) => (
+            <ScrollView style={{ width: '100%', padding: 10 }}>
 
-    <SafeAreaView>
-      <Text>Acitve Rewards</Text>
-      <FlatList
-        keyExtractor={(item) => item.id}
-        data={DATA}
-        refreshing={refeshing}
-        onRefresh={handleRefresh}
-        renderItem={({ item }) => (
-          <ScrollView style={{ width: '100%', padding: 10 }}>
+              <TouchableOpacity onPress = {() => Linking.canOpenURL(item.imageURL).then(() => {Linking.openURL(item.imageURL);})}>
+                {/* <View style={{ flex: .5 }}>
+                  <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
+                </View>
+                <View style={{ flexDirection: 'column', padding: 10 }}>
+                  <Text style={styles.infoTextTitle}>{item.name}</Text>
+                  <Text style={styles.infoTextTitle}>{item.claimed}</Text>
+                  <Text style={styles.infoTextTitle}>URL: {item.referenceURL}</Text>
+                  <Text style={styles.infoTextTitle}>Points: {item.points}</Text>
+                  <Text style={styles.infoTextTitle}>{item.active}</Text>
+                </View> */}
+                <Card>
+                  <Card.Cover source={{ uri: item.imageURL }}/>
+                  <Card.Title title={item.name} titleStyle={styles.infoTextTitle} />
+                  <Card.Content>
+                    <Paragraph style={styles.infoText}>Points: {item.points}</Paragraph>
+                    <Paragraph style={styles.infoText}>Status: {item.active}</Paragraph>
+                    <Paragraph style={styles.infoText}>{item.claimed}</Paragraph>
+                  </Card.Content>
+                </Card>
+                {/* <View style={{flexDirection:'row', alignContent: 'center'}}> */}
+                  <View style={{borderWidth:2, backgroundColor: "#2ABAFF", borderRadius:30, padding:'1%', borderColor:"#2ABAFF", marginHorizontal:'30%'}}>
+                    <Button
+                      onPress={async () => {
+                        const q = doc(firestore, "seed", accId, "rewards",item.id);
+                        await updateDoc(q,{active: true});
+                      }}
+                      title="Activate"
+                      color="white"
+                    />
+                  </View>
+                  <View style={{borderWidth:2, backgroundColor: "#2ABAFF", borderRadius:30, padding:'1%', borderColor:"#2ABAFF", marginHorizontal:'30%'}}>
+                    <Button
+                      onPress={async () => {
+                        const q = doc(firestore, "seed", accId, "rewards",item.id);
+                        await updateDoc(q,{active: false});
+                      }}
+                      title="Deactivate"
+                      color="white"
+                    />
+                  </View>
+                {/* </View> */}
+              </TouchableOpacity>
 
-            <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap', width: "100%", height: '100%', borderWidth: .5, borderRadius: 8 }}>
-              <View style={{ flex: .5 }}>
-                <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
-              </View>
-              <View style={{ flexDirection: 'column', padding: 10 }}>
-                <Text style={styles.infoTextTitle}>{item.name}</Text>
-                <Text style={styles.infoTextTitle}>{item.claimed}</Text>
-                <Text style={styles.infoTextTitle}>URL: {item.referenceURL}</Text>
-                <Text style={styles.infoTextTitle}>Points: {item.points}</Text>
-                <Text style={styles.infoTextTitle}>{item.active}</Text>
-              </View>
-              <Button
-                onPress={async () => {
-                  const q = doc(firestore, "seed", accId, "rewards",item.id);
-                  await updateDoc(q,{active: true});
-                }}
-                title="Activate"
-                color="#841584"
-              />
-              <Button
-                onPress={async () => {
-                  const q = doc(firestore, "seed", accId, "rewards",item.id);
-                  await updateDoc(q,{active: false});
-                }}
-                title="Deactivate"
-                color="#841584"
-              />
-            </TouchableOpacity>
-
-          </ScrollView>
-        )}
-      />
+            </ScrollView>
+          )}
+        />
 
 
-    </SafeAreaView>
-
+      </SafeAreaView>
+    </View>
   );
 }

@@ -125,13 +125,13 @@ export default function ViewChoreChild({ navigation, route }) {
             toggleOverlay()
           }}
           title="request to complete"
-          color="#841584"
+          color="#2ABAFF"
         />
 
         <Button
           onPress={async () => { navigation.navigate("HomeScreenChild", { accId, choreId, firestore }) }}
           title="Ok"
-          color="#841584"
+          color="#2ABAFF"
         />
 
         <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
@@ -143,7 +143,7 @@ export default function ViewChoreChild({ navigation, route }) {
             
             }}
             title="pick image"
-            color="#841584"
+            color="#2ABAFF"
             disabled = {disabled}
           />
         </Overlay>

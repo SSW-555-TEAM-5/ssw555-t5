@@ -1,9 +1,10 @@
-import NavBar from "../../components/header.js";
+import NavBar from "../../components/header1.js";
 import React, { useEffect, useState } from 'react';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import moment from 'moment';
 import styles from '../../components/colors';
 import { FlatList, SafeAreaView, View, ScrollView, Text, TouchableOpacity, StyleSheet, Button, Image } from 'react-native';
+import { Paragraph, Card } from "react-native-paper";
 
 
 
@@ -54,66 +55,49 @@ export default function HomeScreenParent({ navigation, route }) {
     }
 
     return (
-        <SafeAreaView>
-            <NavBar />
+        <View style={{backgroundColor: "white", flex:1}}>
+            <SafeAreaView>
+                <Text style={{fontSize: 30, textAlign:'center', color: "#2ABAFF"}}> Welcome,  Guardian! </Text>
+                    <Text style= {{fontStyle:"italic", textAlign:'center', fontSize: 20, color:'gray'}}>Time to assign chores!</Text>
 
-            <Button
-                onPress={() => {
+                <NavBar navigation={navigation} route={route} />
 
-                    navigation.navigate("CreateChores", { firestore, accId });
+                <FlatList
+                    keyExtractor={(item) => item.id}
+                    data={DATA}
+                    refreshing={refeshing}
+                    onRefresh={handleRefresh}
+                    renderItem={({ item }) => (
+                        <ScrollView style={{ width: '100%', padding: 10 }}>
 
-                }}
-                title="Create chores"
-                color="#841584"
-            />
+                            <TouchableOpacity onPress={() => navigation.navigate("ViewChoreParent", { accId, proId: docid, choreId: item.id, firestore })}>
 
-            <Button
-                onPress={() => {
+                                {/* <View style={{ flex: .5 }}>
+                                    <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
+                                </View>
+                                <View style={{ flexDirection: 'column', padding: 10 }}> */}
+                                    {/* chore card */}
+                                    {/* <Text style={styles.infoTextTitle}>{item.name}</Text>
+                                    <Text style={styles.infoTextTitle}>{item.finished}</Text>
+                                    <Text style={styles.infoText}>Due Date: {item.dueDate}</Text>
+                                </View> */}
+                                <Card>
+                                    <Card.Cover source={{ uri: item.imageURL }}/>
+                                    <Card.Title title={item.name} titleStyle={styles.infoTextTitle} />
+                                    <Card.Content>
+                                        <Paragraph styles={styles.infoText}>{item.finished}</Paragraph>
+                                        <Paragraph style={styles.infoText}>Due Date: {item.dueDate}</Paragraph>
+                                    </Card.Content>
+                                </Card>
+                            </TouchableOpacity>
 
-                    navigation.navigate("CreateReward", { firestore, accId });
+                        </ScrollView>
+                    )}
+                />
 
-                }}
-                title="Create Rewards"
-                color="#841584"
-            />
+            </SafeAreaView>
 
-            <Button
-                onPress={() => {
-
-                    navigation.navigate("ViewRewardParent", { firestore, accId });
-
-                }}
-                title="ViewRewardParent"
-                color="#841584"
-            />
-
-            <FlatList
-                keyExtractor={(item) => item.id}
-                data={DATA}
-                refreshing={refeshing}
-                onRefresh={handleRefresh}
-                renderItem={({ item }) => (
-                    <ScrollView style={{ width: '100%', padding: 10 }}>
-
-                        <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap', width: "80%", height: '95%', borderWidth: .5, borderRadius: 8 }} onPress={() => navigation.navigate("ViewChoreParent", { accId, proId: docid, choreId: item.id, firestore })}>
-                            <View style={{ flex: .5 }}>
-                                <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
-                            </View>
-                            <View style={{ flexDirection: 'column', padding: 10 }}>
-                                {/* chore card */}
-                                <Text style={styles.infoTextTitle}>{item.name}</Text>
-                                <Text style={styles.infoTextTitle}>{item.finished}</Text>
-                                <Text style={styles.infoText}>Due Date: {item.dueDate}</Text>
-                            </View>
-                        </TouchableOpacity>
-
-                    </ScrollView>
-                )}
-            />
-
-        </SafeAreaView>
-
-
+        </View>
 
     )
 
