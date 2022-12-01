@@ -50,7 +50,7 @@ export default function HomeScreenChild({ navigation, route }) {
             <View style = {{flexDirection: 'row'}}>
                 <Button 
                         onPress={async () => {
-                            navigation.navigate("ProfileSelection", { accId: result })
+                            navigation.navigate("ProfileSelection", { accId: accId })
                         }}
                         title="Switch Account"
                         color="#2ABAFF"

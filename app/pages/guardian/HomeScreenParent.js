@@ -57,9 +57,9 @@ export default function HomeScreenParent({ navigation, route }) {
         <View style={{ backgroundColor: "white", flex: 1, paddingHorizontal:'5%' }}>
             <SafeAreaView>
             <View style = {{flexDirection: 'row'}}>
-                <Button 
+            <Button 
                         onPress={async () => {
-                            navigation.navigate("ProfileSelection", { accId: result })
+                            navigation.navigate("ProfileSelection", { accId: accId })
                         }}
                         title="Switch Account"
                         color="#2ABAFF"
