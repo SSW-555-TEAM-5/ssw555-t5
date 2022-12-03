@@ -76,7 +76,8 @@ export default function ViewChoreChild({ navigation, route }) {
       alignItems: "center",
       textAlign: "center",
       backgroundColor: "white",
-      height: "100%"
+      height: "100%",
+      marginTop:'7%'
     }
   });
   const start = async () => {
@@ -104,9 +105,9 @@ export default function ViewChoreChild({ navigation, route }) {
           
         </View>
         
-        <View style={{width:'100%', alignContent:'center',borderWidth:'.5%', borderColor:"#2ABAFF", padding:'3%', alignSelf:'center'}}>
+        <View style={{width:'100%', alignContent:'center',borderWidth:'.5%',borderRadius:'10%', borderColor:"#2ABAFF", padding:'3%', alignSelf:'center'}}>
             <Text style={[styles.black_smallTextBold, {color:"#2ABAFF"}]}>Notes: </Text>
-            <Text style={[styles.infoText, {fontSize:25}]}> {notes} wefhouef</Text>
+            <Text style={[styles.infoText, {fontSize:25}]}>{notes}</Text>
         </View>
 
         <Button

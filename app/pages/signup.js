@@ -1,7 +1,7 @@
 
 
 import React, { useState } from 'react';
-import { StyleSheet, View, Dimensions, ImageBackground, Alert, Modal, Text, TouchableOpacity, TextInput, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Dimensions, ImageBackground, Alert, Modal, Text, TouchableOpacity, TextInput, SafeAreaView,Button } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { signUpWithEmail } from '../../firebase';
 import { pickImage } from '../../upload-image';
@@ -15,7 +15,7 @@ export default function SignUp({ navigation }) {
     const [guardianName, setGuardianName] = useState("");
     const [guardianPin, setGuardianPin] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
-    const [avatarURL, setAvatarURL] = useState("https://firebasestorage.googleapis.com/v0/b/ssw555-t5-7f6c3.appspot.com/o/avatars%2FChoreNScore.png?alt=media&token=d122ce9b-195d-496e-87d5-f2242012328d");
+    const [avatarURL, setAvatarURL] = useState("https://firebasestorage.googleapis.com/v0/b/ssw555-t5-7f6c3.appspot.com/o/avatars%2FChoreNScore%20Cuteness.jpeg?alt=media&token=5563dbd7-6d14-422d-9e2b-960d740d472e");
     return (
         <>
             {/* sign up error modal */}
@@ -72,15 +72,16 @@ export default function SignUp({ navigation }) {
                             <TextInput
                                 onChangeText={setPassword}
                                 placeholder={"Password"}
+                                secureTextEntry={true}
                             />
                         </View>
                     </View>
                     <View>
-                        <Text style={styles.textHeader}>Group Name</Text>
+                        <Text style={styles.textHeader}>Guardian Profile Name</Text>
                         <View style={styles.textInput}>
                             <TextInput
                                 onChangeText={setGuardianName}
-                                placeholder={"McGregor Family"}
+                                placeholder={"Joe McGregor"}
                             />
                         </View>
                     </View>
@@ -90,18 +91,19 @@ export default function SignUp({ navigation }) {
                             <TextInput
                                 onChangeText={setGuardianPin}
                                 placeholder={"1234"}
+                                secureTextEntry={true}
                             />
                         </View>
 
                         <Button
                             onPress={async () => {
-                                let image = await pickImage(accidState + '/avatars');
+                                let image = await pickImage('/accountAvatar');
                                 if (image != ""){
                                     setAvatarURL(image);
                                 }
                                 
                             }}
-                            title="Switch Account"
+                            title="Pick Image"
                             color="#2ABAFF"
                         />
                     </View>

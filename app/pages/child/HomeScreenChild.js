@@ -16,8 +16,7 @@ export default function HomeScreenChild({ navigation, route }) {
 
     async function start() {
         try {
-            console.log(docid);
-            const q = query(collection(firestore, "seed", accId, "chores"), where("chore", ">=", ""));
+            const q = query(collection(firestore, "seed", accId, "chores"), where("finished", "==", false));
             const querySnapshot = await getDocs(q);
             let arys = [];
             querySnapshot.forEach((doc) => {
@@ -73,7 +72,6 @@ export default function HomeScreenChild({ navigation, route }) {
                 <Text style={{ fontStyle: "italic", textAlign: 'center', fontSize: 20, color: 'gray' }}>Time to do chores!</Text>
                 <NavBar navigation={navigation} route={route} />
                 </View>
-                <View style={{borderWidth:'1%', borderColor:"#2ABAFF", padding:'1%', borderRadius:10}}>
                 <FlatList
                     keyExtractor={(item) => item.id}
                     data={DATA}
@@ -95,7 +93,7 @@ export default function HomeScreenChild({ navigation, route }) {
                         </View>
                     )}
                 />
-                </View>
+               
 
 
             </SafeAreaView>

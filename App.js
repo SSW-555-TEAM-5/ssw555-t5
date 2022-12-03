@@ -78,7 +78,7 @@ export default function App() {
           headerBackVisible: false,
         }} />
         <Stack.Screen name="ViewChoreChild" component={ViewChoreChild} options={{
-          headerStyle: { backgroundColor: 'transparent' },
+          headerStyle: { backgroundColor: 'white' },
           headerTransparent: true,
           headerTintColor: "#2ABAFF",
           headerShadowVisible: false,
@@ -90,7 +90,7 @@ export default function App() {
           headerShown: false,
           headerTintColor: "#2ABAFF",
           headerShadowVisible: false,
-          headerShown: true,
+          headerShown: false,
           title: '',
           headerBackVisible: false,
         }} />
@@ -112,7 +112,7 @@ export default function App() {
         }} />
 
         <Stack.Screen name="ViewChoreParent" component={ViewChoreParent} options={{
-          headerStyle: { backgroundColor: 'transparent' },
+          headerStyle: { backgroundColor: 'white' },
           headerTransparent: true,
           headerTintColor: "#2ABAFF",
           headerShadowVisible: false,
@@ -121,7 +121,7 @@ export default function App() {
 
         }} />
         <Stack.Screen name="ViewRewardChild" component={ViewRewardChild} options={{
-          headerStyle: { backgroundColor: 'transparent' },
+          headerStyle: { backgroundColor: 'white' },
           headerTransparent: true,
           headerTintColor: "#2ABAFF",
           headerShadowVisible: false,
@@ -130,7 +130,7 @@ export default function App() {
 
         }} />
         <Stack.Screen name="ViewRewardParent" component={ViewRewardParent} options={{
-          headerStyle: { backgroundColor: 'transparent' },
+          headerStyle: { backgroundColor: 'white' },
           headerTransparent: true,
           headerTintColor: "#2ABAFF",
           headerShadowVisible: false,

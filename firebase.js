@@ -76,6 +76,8 @@ const addNewUser = async (fName, lName, email, avatarURL, guardianName, guardian
             first_name: fName,
             last_name: lName,
             email: email,
+            avatar: avatarURL,
+
             
         }
         //When new user is made, guardian profile is automattically name with information inputted

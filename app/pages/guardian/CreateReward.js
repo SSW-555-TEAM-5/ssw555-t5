@@ -13,7 +13,7 @@ export default function CreateReward({ navigation, route }) {
     const [name, setName] = useState("");
     const [ref, setRef] = useState("");
     const [rewardPoint, setReward] = useState(0);
-    const [imageURL, setImageURL] = useState("");
+    const [imageURL, setImageURL] = useState("https://firebasestorage.googleapis.com/v0/b/ssw555-t5-7f6c3.appspot.com/o/avatars%2Freward.png?alt=media&token=068660bf-d1f0-4411-aa9c-a40e11e8442c");
 
 
     const hostReward = async (rewardName, rewardPoint, image, reference) => {
@@ -87,13 +87,15 @@ export default function CreateReward({ navigation, route }) {
 
 
                     <Button
-                        onPress={async () => {
-                            let image = await pickImage(accId+'/rewards');
-                            setImageURL(image);
-                        }}
-                        title="Upload picture (optional)"
-                        color="#2ABAFF"
-                    />
+                            onPress={async () => {
+                                let image = await pickImage(accId+'/avatars');
+                                if (image != ""){
+                                    setAvatarURL(image);
+                                }
+                            }}
+                            title="Upload Picture"
+                            color="#2ABAFF"
+                        />
 
                     <Button
                         onPress={async () => { hostEv() }}

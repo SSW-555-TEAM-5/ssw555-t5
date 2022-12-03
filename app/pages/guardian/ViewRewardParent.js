@@ -55,7 +55,7 @@ export default function ViewRewardParent({ navigation, route }) {
   }, []);
 
   return (
-    <View style={{backgroundColor: "white", flex:1}}>
+    <View style={{backgroundColor: "white", flex:1, paddingHorizontal:'2%', paddingVertical:'10%'}}>
       <SafeAreaView>
         <Text style={{fontSize: 30, textAlign:'center', color: "#2ABAFF"}}>Active Rewards</Text>
         <Text style= {{fontStyle:"italic", textAlign:'center', fontSize: 20, color:'gray', paddingBottom:15}}>Goodies For The Kiddies</Text>
@@ -67,7 +67,7 @@ export default function ViewRewardParent({ navigation, route }) {
           renderItem={({ item }) => (
             <ScrollView style={{ width: '100%', padding: 10 }}>
 
-              <TouchableOpacity onPress = {() => Linking.canOpenURL(item.imageURL).then(() => {Linking.openURL(item.imageURL);})}>
+              <TouchableOpacity onPress = {() => Linking.canOpenURL(item.referenceURL).then(() => {Linking.openURL(item.referenceURL);})}>
                 {/* <View style={{ flex: .5 }}>
                   <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%', borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }} />
                 </View>
