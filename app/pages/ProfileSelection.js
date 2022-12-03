@@ -8,6 +8,7 @@ import { Overlay, Image} from 'react-native-elements';
 import { Card } from 'react-native-paper';
 
 import { pickImage } from '../../upload-image';
+import StartUpScreen from "./StartUpScreen";
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCz1itc7JT1NFYX1-X-I07ujw5jn_LGelc",
@@ -31,7 +32,7 @@ export default function ProfileSelection({ navigation, route }) {
     const [accidState, setAccidState] = useState(accId);
     const [pin, setPin] = useState("");
     const [newPName, setNewPName] = useState("");
-    const [avatarURL, setAvatarURL] = useState("https://firebasestorage.googleapis.com/v0/b/ssw555-t5-7f6c3.appspot.com/o/avatars%2FChoreNScore.png?alt=media&token=d122ce9b-195d-496e-87d5-f2242012328d");
+    const [avatarURL, setAvatarURL] = useState("https://firebasestorage.googleapis.com/v0/b/ssw555-t5-7f6c3.appspot.com/o/avatars%2FChoreNScore%20Cuteness.jpeg?alt=media&token=5563dbd7-6d14-422d-9e2b-960d740d472e");
 
     const [visible, setVisible] = useState(false);
     //Data format = {id: element,id2:element2}
@@ -114,7 +115,7 @@ export default function ProfileSelection({ navigation, route }) {
         try {
 
             const profileData = {
-                name: newPName,
+                profileName: newPName,
                 status: false,
                 totalPoint: 0,
                 avatar: avatarURL
@@ -142,15 +143,24 @@ export default function ProfileSelection({ navigation, route }) {
         setRefresh(false);
     }
     return (
-        // <View style={{backgroundColor: "white", flex:1}}>
             <SafeAreaView style={{backgroundColor: "white", flex:1}}>
-                <View style = {{paddingVertical:'15%'}}>
-                {/* <View style={{paddingBottom:"5%"}}> */}
+                <View style={{flexDirection:'row', justifyContent:'space-evenly'}}>
+                    <Button
+                        onPress={async () => { navigation.navigate(StartUpScreen) }}
+                        title="Logout"
+                        color="#2ABAFF"
+                    />
+                    <Button
+                    onPress={async () => { setModalVisible(true) }}
+                    title="Add New Profile"
+                    color="#2ABAFF"
+                    />
+                </View>
+                <View style = {{paddingVertical:'2%'}}>
                     <Text style={{fontSize: 30, textAlign:'center', color: "#2ABAFF"}}>Family</Text>
-                {/* </View> */}
-                
+                </View>
+                <View style = {{borderRadius:'15%', padding:'5%', marginBottom:'15%'}}>
                 <FlatList
-                    
                     keyExtractor={(item) => item.id}
                     data={DATA}
                     refreshing={refeshing}
@@ -168,19 +178,15 @@ export default function ProfileSelection({ navigation, route }) {
                         </View>
                     )}
                 />
-
-                <Button
-                    onPress={async () => { setModalVisible(true) }}
-                    title="add new profile"
-                    color="#2ABAFF"
-                />
                 </View>
-                <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+                <Overlay borderRadius = {3} isVisible={visible} onBackdropPress={toggleOverlay} >
 
-                    <Text>Enter Pin</Text>
+                    <Text style={{fontSize:25}}>Enter Pin</Text>
                     <TextInput
                         onChangeText={setPin}
                         placeholder={"0000"}
+                        style={{textAlign:'center', fontSize:20}}
+                        secureTextEntry={true}
 
                     />
                     <Button
@@ -211,7 +217,7 @@ export default function ProfileSelection({ navigation, route }) {
                             color="#2ABAFF"
                         />
                         <Button
-                            onPress={async () => { addNewProfile() }}
+                            onPress={async () => { addNewProfile(); setAvatarURL("https://firebasestorage.googleapis.com/v0/b/ssw555-t5-7f6c3.appspot.com/o/avatars%2FChoreNScore%20Cuteness.jpeg?alt=media&token=5563dbd7-6d14-422d-9e2b-960d740d472e")}}
                             title="Add"
                             color="#2ABAFF"
                         />

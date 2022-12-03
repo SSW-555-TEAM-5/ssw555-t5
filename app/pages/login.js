@@ -37,6 +37,7 @@ export default function Login({ navigation }) {
                     <TextInput
                         onChangeText={setPassword}
                         placeholder={"Password"}
+                        secureTextEntry={true}
                     />
                     </View>
                 <TouchableOpacity

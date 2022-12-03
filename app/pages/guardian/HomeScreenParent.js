@@ -83,7 +83,6 @@ export default function HomeScreenParent({ navigation, route }) {
 
                 <NavBar navigation={navigation} route={route} />
                 </View>
-                <View style={{ width: '100%', paddingVertical: '10%', backgroundColor: 'white' }}>
                 <FlatList
                     keyExtractor={(item) => item.id}
                     data={DATA}
@@ -116,10 +115,7 @@ export default function HomeScreenParent({ navigation, route }) {
                         </ScrollView>
                     )}
                 />
-                </View>
-
             </SafeAreaView>
-
         </View>
 
     )

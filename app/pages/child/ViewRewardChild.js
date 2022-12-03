@@ -11,7 +11,7 @@ export default function ViewRewardChild({ navigation, route }) {
   const [visible, setVisible] = useState(false);
   const [refeshing, setRefresh] = useState(false);
   const [points, setPoints] = useState(0);
-  const [message, setmsg] = useState("Cannot be claimed");
+  const [message, setmsg] = useState("Cannot be claimed, not enough points");
   //Data format = {id: element,id2:element2}
   const [DATA, setDATA] = useState([]);
 
@@ -66,18 +66,7 @@ export default function ViewRewardChild({ navigation, route }) {
         renderItem={({ item }) => (
           <ScrollView style={{ width: '100%', padding: 10 }}>
 
-            <TouchableOpacity onPress = {() => Linking.canOpenURL(item.imageURL).then(() => {Linking.openURL(item.imageURL);})}>
-              {/* <View style={{ flex: .5 }}>
-                <Image source={{ uri: item.imageURL }} style={{ height: '100%', width: '100%' }} />
-              </View>
-
-              <View style={{ flexDirection: 'column', padding: 10 }}>
-                <Text style={styles.infoTextTitle}>{item.name}</Text>
-
-                <Text style={styles.infoTextTitle}>URL: {item.referenceURL}</Text>
-                <Text style={styles.infoTextTitle}>Points: {item.points}</Text>
-
-              </View> */}
+            <TouchableOpacity onPress = {() => Linking.canOpenURL(item.referenceURL).then(() => {Linking.openURL(item.referenceURL);})}>
 
               <Card>
                 <Card.Cover source={{ uri: item.imageURL }}/>
@@ -112,9 +101,9 @@ export default function ViewRewardChild({ navigation, route }) {
       />
 
       <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-        <View >
-          <Text>{message}</Text>
-          <Text>Press anywhere to go back</Text>
+        <View>
+          <Text style={{textAlign:'center'}}>{message}</Text>
+          <Text style={{textAlign:'center'}}>Press anywhere to go back</Text>
         </View>
       </Overlay>
     </SafeAreaView>
